@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# 2025Project
+A website and application that transforms the hospitality experience for hotel guests; a full-featured digital concierge to provide a user-friendly platform for hotel guests to enhance their convenience, improve communication with hotel staff and deliver personalized services seamlessly. 
+
+Link to Project Document: https://docs.google.com/document/d/1vwa7Akim4TS-9_qt-DupDD9QYkhZ0fvLyVeKOtOb3Vw/edit?usp=sharing
+>>>>>>> e812501989015ac6dba48757cfe113758393e01f
