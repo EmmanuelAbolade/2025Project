@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.ae8187a7.css",
-    "main.js": "/static/js/main.7dda55c6.js",
-    "static/media/carousel-2.jpg": "/static/media/carousel-2.8d66d8fcbc813e860821.jpg",
-    "static/media/carousel-1.jpg": "/static/media/carousel-1.10ad0d57006e62260f15.jpg",
-    "static/media/video.jpg": "/static/media/video.5a8116233761d401c8b1.jpg",
-    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
-    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
-    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
-    "index.html": "/index.html",
-    "main.ae8187a7.css.map": "/static/css/main.ae8187a7.css.map",
-    "main.7dda55c6.js.map": "/static/js/main.7dda55c6.js.map"
+    "main.css": "/2025Project/static/css/main.37b79e14.css",
+    "main.js": "/2025Project/static/js/main.18e8761a.js",
+    "static/media/carousel-2.jpg": "/2025Project/static/media/carousel-2.8d66d8fcbc813e860821.jpg",
+    "static/media/carousel-1.jpg": "/2025Project/static/media/carousel-1.10ad0d57006e62260f15.jpg",
+    "static/media/video.jpg": "/2025Project/static/media/video.5a8116233761d401c8b1.jpg",
+    "static/media/slick.svg": "/2025Project/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/2025Project/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/2025Project/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/2025Project/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/2025Project/index.html",
+    "main.37b79e14.css.map": "/2025Project/static/css/main.37b79e14.css.map",
+    "main.18e8761a.js.map": "/2025Project/static/js/main.18e8761a.js.map"
   },
   "entrypoints": [
-    "static/css/main.ae8187a7.css",
-    "static/js/main.7dda55c6.js"
+    "static/css/main.37b79e14.css",
+    "static/js/main.18e8761a.js"
   ]
 }

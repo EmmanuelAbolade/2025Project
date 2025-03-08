@@ -18,11 +18,12 @@ import {
   Testimonial,
 } from "./pages/index";
 import Footer from "./components/common/Footer";
+
 export default function App() {
   return (
     <>
       <div>
-        <Router>
+        <Router basename="/2025Project">
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
