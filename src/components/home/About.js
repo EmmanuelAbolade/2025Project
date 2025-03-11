@@ -44,7 +44,7 @@ export default function About() {
                   <img
                     className="img-fluid rounded w-75 wow zoomIn"
                     data-wow-delay="0.1s"
-                    src="/assets/img/H-1.jpg"
+                    src={`${process.env.PUBLIC_URL}/assets/img/H-1.jpg`}
                     style={{ marginTop: "25%" }}
                   />
                 </div>
@@ -52,21 +52,21 @@ export default function About() {
                   <img
                     className="img-fluid rounded w-100 wow zoomIn"
                     data-wow-delay="0.3s"
-                    src="/assets/img/H-2.jpg"
+                    src={`${process.env.PUBLIC_URL}/assets/img/H-2.jpg`}
                   />
                 </div>
                 <div className="col-6 text-end">
                   <img
                     className="img-fluid rounded w-50 wow zoomIn"
                     data-wow-delay="0.5s"
-                    src="/assets/img/H-3.jpg"
+                    src={`${process.env.PUBLIC_URL}/assets/img/H-3.jpg`}
                   />
                 </div>
                 <div className="col-6 text-start">
                   <img
                     className="img-fluid rounded w-75 wow zoomIn"
                     data-wow-delay="0.7s"
-                    src="/assets/img/H-4.jpg"
+                    src={`${process.env.PUBLIC_URL}/assets/img/H-4.jpg`}
                   />
                 </div>
               </div>

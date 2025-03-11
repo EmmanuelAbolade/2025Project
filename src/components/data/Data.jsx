@@ -67,14 +67,14 @@ export const socialIcons = [
 
 export const carouselData = [
   {
-    img: "../assets/img/carousel-1.jpg",
+    img: `${process.env.PUBLIC_URL}/assets/img/carousel-1.jpg`,
     title: "Hotel Guest Assistant",
     subtitle: "Discover Diverse Range Of Concierge Services",
     btn1: "Request Services and amenities",
     btn2: "Download App",
   },
   {
-    img: "../assets/img/carousel-2.jpg",
+    img: `${process.env.PUBLIC_URL}/assets/img/carousel-2.jpg`,
     title: "Your Ease and Convenience",
     subtitle: "Make Your Request, Bookings, Orders And Reservations with Ease",
     btn1: "Contact Front Desk",
@@ -150,22 +150,22 @@ export const services = [
 ];
 export const team = [
   {
-    image: "../assets/img/team-1.jpg",
+    image: `${process.env.PUBLIC_URL}/assets/img/team-1.jpg`,
     name: "Marvix Santos",
     designation: "Advisory",
   },
   {
-    image: "../assets/img/team-2.jpg",
+    image: `${process.env.PUBLIC_URL}/assets/img/team-2.jpg`,
     name: "Ihok Antovoc",
     designation: "Deputy Advisory",
   },
   {
-    image: "../assets/img/team-3.jpg",
+    image: `${process.env.PUBLIC_URL}/assets/img/team-3.jpg`,
     name: "Ben Manuel",
     designation: "IT Specialist",
   },
   {
-    image: "../assets/img/team-4.jpg",
+    image: `${process.env.PUBLIC_URL}/assets/img/team-4.jpg`,
     name: "Rosa Gold",
     designation: "Designation",
   },
@@ -250,40 +250,37 @@ export const contact = [
 ];
 export const testimonial = [
   {
-    description:
-      "Very nice and user-friendly app",
+    description: "Very nice and user-friendly app",
     name: "Singer Crown",
     profession: "Businessman",
     icon: (
       <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
-    img: "../assets/img/testimonial-1.jpg",
+    img: `${process.env.PUBLIC_URL}/assets/img/testimonial-1.jpg`,
   },
   {
-    description:
-      "Amazing quick app",
+    description: "Amazing quick app",
     name: "Anonynmous",
     profession: "Anonymous",
     icon: (
       <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
-    img: "../assets/img/testimonial-2.jpg",
+    img: `${process.env.PUBLIC_URL}/assets/img/testimonial-2.jpg`,
   },
   {
-    description:
-      "Very reliable. I highly recommend.",
+    description: "Very reliable. I highly recommend.",
     name: "Daisy Dusk",
     profession: "Profession",
     icon: (
       <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
-    img: "../assets/img/testimonial-3.jpg",
+    img: `${process.env.PUBLIC_URL}/assets/img/testimonial-3.jpg`,
   },
 ];
 
 export const roomItems = [
   {
-    img: "../assets/img/bedroom4.png",
+    img: `${process.env.PUBLIC_URL}/assets/img/bedroom4.png`,
     price: "$120/night",
     name: "Junior Suit",
     star: [
@@ -293,14 +290,12 @@ export const roomItems = [
       <small class="fa fa-star text-primary"></small>,
       <small class="fa fa-star text-primary"></small>,
     ],
-    description:
-      "Very comfortable for a single individual.",
+    description: "Very comfortable for a single individual.",
     yellowbtn: "View Detail",
     darkbtn: "book now",
   },
-
   {
-    img: "../assets/img/bedroom5.png",
+    img: `${process.env.PUBLIC_URL}/assets/img/bedroom5.png`,
     price: "$150/night",
     name: "Executive Suite",
     star: [
@@ -310,13 +305,12 @@ export const roomItems = [
       <small class="fa fa-star text-primary"></small>,
       <small class="fa fa-star text-primary"></small>,
     ],
-    description:
-      "Highly recommended for a small family.",
+    description: "Highly recommended for a small family.",
     yellowbtn: "View Detail",
     darkbtn: "book now",
   },
   {
-    img: "../assets/img/bedroom6.png",
+    img: `${process.env.PUBLIC_URL}/assets/img/bedroom6.png`,
     price: "$250/night",
     name: "Super Deluxe",
     star: [
@@ -326,8 +320,7 @@ export const roomItems = [
       <small class="fa fa-star text-primary"></small>,
       <small class="fa fa-star text-primary"></small>,
     ],
-    description:
-      "Luxury and High class.",
+    description: "Luxury and High class.",
     yellowbtn: "View Detail",
     darkbtn: "book now",
   },
