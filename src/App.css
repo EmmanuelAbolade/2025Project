@@ -18,5 +18,7 @@
     bottom: 0;
 }
 .bg-image {
-    background-image: url('../public/assets/img/carousel-1.jpg');
+    /*background-image: url(${process.env.PUBLIC_URL}/assets/img/carousel-1.jpg);*/
+    background-image: url('/assets/img/carousel-1.jpg');
+
 }

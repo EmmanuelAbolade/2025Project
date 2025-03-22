@@ -101,47 +101,53 @@ export const about = [
 
 export const services = [
   {
-    icon: <i class="fa fa-broom fa-2x text-primary"></i>,
-    name: "House Keeping",
-    discription: "Request room cleaning, Fresh Linens, or other housekeeping services with ease.",
+    icon: <i className="fa fa-bed"></i>,
+    name: "Housekeeping Services",
+    description: "Request housekeeping assistance for your room.",
+    link: "/housekeeping",
   },
   {
-    icon: <i class="fa fa-utensils fa-2x text-primary"></i>,
-    name: "Meal Order",
-    discription: "Craving for a snack or meal? Simply place an order. We'll do the rest.",
-  },
-  {
-    icon: <i class="fa fa-spa fa-2x text-primary"></i>,
+    icon: <i className="fa fa-spa"></i>,
     name: "Spa & Fitness",
-    discription: "Book a spa appointment or gym fitness trainer to get refreshed.",
+    description: "Book a relaxing spa session or fitness class.",
+    link: "/spa-fitness",
   },
-
   {
-    icon: <i class="fa fa-hotel fa-2x text-primary"></i>,
+    icon: <i className="fa fa-utensils"></i>,
+    name: "Meal Order",
+    description: "Place an order for in-room dining.",
+    link: "/meal-order",
+  },
+  {
+    icon: <i className="fa fa-phone"></i>,
+    name: "Contact Front Desk",
+    description: "Get in touch with our front desk for assistance.",
+    link: "/contact-front-desk",
+  },
+  {
+    icon: <i className="fa fa-calendar"></i>,
     name: "Book Another Stay",
-    discription: "Enjoy your experience? Book your next stay effortlessly or extend your stay.",
+    description: "Plan your next stay with us.",
+    link: "/book-another-stay",
   },
   {
-    icon: <i class="fa fa-map-marker-alt fa-2x text-primary"></i>,
-    name: "Book a tour",
-    discription: "Discover the best local attractions and events curated just for you.",
-  },
-
-  {
-    icon: <i class="fa fa-shopping-cart fa-2x text-primary"></i>,
-    name: "Shop In-hotel",
-    discription: "Browse and purchase a variety of items directly from our in-hotel store. From toiletries and snacks to souvenirs and gifts, we've got you covered.",
+    icon: <i className="fa fa-car"></i>,
+    name: "Book Taxi",
+    description: "Book a taxi or car rental service.",
+    link: "/book-taxi",
   },
   {
-    icon: <i class="fa fa-taxi fa-2x text-primary"></i>,
-    name: "Taxi and Car Rental",
-    discription: "Arrange a taxi or other rentals vehicle at any time of the day.",
-},
-{
-  icon: <i class="fa fa-bell fa-2x text-primary"></i>,
-  name: "Contact Front Desk",
-  discription: "Reach the front desk for other needed assistance.",
-},
+    icon: <i className="fa fa-map"></i>,
+    name: "Book Tour & Attractions",
+    description: "Explore nearby attractions with guided tours.",
+    link: "/book-tour",
+  },
+  {
+    icon: <i className="fa fa-shopping-cart"></i>,
+    name: "Shop in Hotel",
+    description: "Order items from our in-hotel shop.",
+    link: "/shop-in-hotel",
+  },
 {
   icon: <i class="fa fa-sign-in-alt fa-2x text-primary"></i>,
   name: "Check-In And Check-Out",
