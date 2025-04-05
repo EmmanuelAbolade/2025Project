@@ -1,12 +1,39 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { navList } from "../data/Data";
 import SocialIcons from "./SocialIcons";
+import { auth } from "../../firebase/firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Header() {
   const [navbarCollapse, setNavbarCollapse] = useState(false);
-
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [role, setRole] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        setLoggedIn(true);
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        setRole(userDoc.data()?.role || null);
+      } else {
+        setLoggedIn(false);
+      }
+    };
+
+    fetchUserRole();
+  }, []);
+
+  const handleLogout = async () => {
+    await auth.signOut();
+    setLoggedIn(false);
+    setRole(null);
+    navigate("/login");
+  };
 
   const handleMouseEnter = (itemId) => {
     setActiveDropdown(itemId);
@@ -18,19 +45,19 @@ export default function Header() {
 
   return (
     <>
-      <div className="container-fluid bg-dark px-0">
+      <div className="container-fluid bg-dark px-0 text-decoration-none">
         <div className="row gx-0">
           <div className="col-lg-3 bg-dark d-none d-lg-block">
             <Link
               to="/"
-              className="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center"
+              className="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center text-decoration-none"
             >
               <h1 className="m-0 text-primary text-uppercase">Guest Ease</h1>
             </Link>
           </div>
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-              <Link to="/" className="navbar-brand d-block d-lg-none">
+              <Link to="/" className="navbar-brand d-block d-lg-none text-decoration-none">
                 <h1 className="m-0 text-primary text-uppercase">Guest Ease</h1>
               </Link>
               <button
@@ -56,7 +83,7 @@ export default function Header() {
                           onMouseEnter={() => handleMouseEnter(item.id)}
                           onMouseLeave={handleMouseLeave}
                         >
-                          <Link className="nav-link dropdown-toggle">
+                          <Link className="nav-link dropdown-toggle text-decoration-none">
                             {item.text}
                           </Link>
                           <div
@@ -78,6 +105,39 @@ export default function Header() {
                       )}
                     </div>
                   ))}
+                  {/* Dynamic Dashboard Link */}
+                  {loggedIn && (
+                    <Link
+                      to={
+                        role === "guest"
+                          ? "/guest-dashboard"
+                          : role === "staff"
+                          ? "/staff-dashboard"
+                          : role === "admin"
+                          ? "/admin-dashboard"
+                          : "/"
+                      }
+                      className="nav-item nav-link"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+                  {/* Login Link */}
+                  {!loggedIn && (
+                    <Link to="/login" className="nav-item nav-link">
+                      Login
+                    </Link>
+                  )}
+                  {/* Logout Button */}
+                  {loggedIn && (
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-link nav-item nav-link"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Logout
+                    </button>
+                  )}
                 </div>
                 <SocialIcons />
               </div>

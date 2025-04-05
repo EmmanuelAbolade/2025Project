@@ -30,7 +30,9 @@ const ShopInHotelForm = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Shop in Hotel</h2>
+      <h2 className="text-center">Shop in Hotel</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Item Name</Form.Label>
@@ -62,6 +64,8 @@ const ShopInHotelForm = () => {
             Place Order
           </Button>
         </Form>
+        </div>
+        </div>
       </Container>
     );
   };

@@ -12,6 +12,15 @@ export default function Sliders() {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768, // For tablets and smaller
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   return (
     <>
@@ -32,6 +41,7 @@ export default function Sliders() {
                     <img
                       className="img-fluid flex-shrink-0 rounded"
                       src={item.img}
+                      alt={`${item.name} testimonial`}
                       style={{ width: "45px", height: "45px" }}
                     />
                     <div className="ps-3">

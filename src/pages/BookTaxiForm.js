@@ -25,10 +25,14 @@ const BookTaxiForm = () => {
       console.error("Error submitting booking:", err);
     }
   };
+  
+
 
   return (
     <Container className="mt-4">
-      <h2>Book a Taxi</h2>
+      <h2 className="text-center">Book a Taxi</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Pickup Location</Form.Label>
@@ -70,6 +74,8 @@ const BookTaxiForm = () => {
           Book Taxi
         </Button>
       </Form>
+      </div>
+      </div>
     </Container>
   );
 };

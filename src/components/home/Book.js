@@ -1,4 +1,7 @@
 import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 export default function Book() {
   return (
@@ -35,7 +38,7 @@ export default function Book() {
                     </div>
                   </div>
                   <div className="col-md-3">
-                    <select className="form-select">
+                    <select className="form-select ">
                       <option selected>Select number of Adult(s)</option>
                       <option value="1">Adult 1</option>
                       <option value="2">Adult 2</option>

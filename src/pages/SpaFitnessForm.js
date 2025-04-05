@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { Form, Button, Container } from "react-bootstrap";
+import { auth } from "../firebase/firebaseConfig";
 
 const SpaFitnessForm = () => {
   const [formData, setFormData] = useState({
@@ -18,16 +19,22 @@ const SpaFitnessForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Debugging: Check form data before submission
+      console.log("Form data:", formData);
+  
       await addDoc(collection(db, "spaFitnessBookings"), formData);
       alert("Spa & Fitness booking submitted successfully!");
     } catch (err) {
-      console.error("Error submitting booking:", err);
+      console.error("Error submitting booking:", err); // Debugging
     }
   };
+  
 
   return (
     <Container className="mt-4">
-      <h2>Spa & Fitness Bookings</h2>
+      <h2 className="text-center">Spa & Fitness Bookings</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Spa Type</Form.Label>
@@ -61,6 +68,8 @@ const SpaFitnessForm = () => {
           Submit Booking
         </Button>
       </Form>
+      </div>
+      </div>
     </Container>
   );
 };

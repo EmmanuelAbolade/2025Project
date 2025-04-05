@@ -17,7 +17,7 @@ export default function Rooms() {
               <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div className="room-item shadow rounded overflow-hidden">
                   <div className="position-relative">
-                    <img className="img-fluid" src={item.img} alt="img" />
+                    <img className="img-fluid" src={item.img} alt={`${item.name} room`} />
                     <small className="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">
                       {item.price}
                     </small>
@@ -31,7 +31,7 @@ export default function Rooms() {
                       {facility.map((item, index) => (
                         <small className="border-end me-3 pe-3">
                           {item.icon}
-                          {item.quantity} {item.facility}
+                          {item.quantity || "N/A"} {item.facility}
                         </small>
                       ))}
                     </div>
@@ -39,11 +39,11 @@ export default function Rooms() {
                     <div className="d-flex justify-content-between">
                       <a
                         className="btn btn-sm btn-primary rounded py-2 px-4"
-                        href=""
+                        href="src/pages/BookAnotherStayForm.js"
                       >
                         {item.yellowbtn}
                       </a>
-                      <a className="btn btn-sm btn-dark rounded py-2 px-4" href="">
+                      <a className="btn btn-sm btn-dark rounded py-2 px-4" href="src/pages/BookAnotherStayForm.js">
                         {item.darkbtn}
                       </a>
                     </div>

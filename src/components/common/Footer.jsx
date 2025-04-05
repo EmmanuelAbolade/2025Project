@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { footerContact, footerItem, socialIcons } from "../data/Data";
-import Newsletter from "../home/Newsletter";
+//import Newsletter from "../home/Newsletter";
 
 export default function Footer() {
   return (
     <>
-      <Newsletter />
+      
       <div
-        className="container-fluid bg-dark text-light footer wow fadeIn"
+        className="container-fluid text-light text-decoration-none footer wow fadeIn "
         data-wow-delay="0.1s"
       >
-        <div className="container pb-5">
-          <div className="row g-5">
+        <div className="container pb-3">
+          <div className="row g-3">
             <div className="col-md-6 col-lg-4">
               <div className="bg-primary rounded p-4">
                 <Link to="/">
@@ -48,7 +48,7 @@ export default function Footer() {
                       {section.header}
                     </h6>
                     {section.UnitItem.map((item, itemIndex) => (
-                      <a className="btn btn-link" href="" key={itemIndex}>
+                      <a className="btn btn-link text-decoration-none" href="" key={itemIndex}>
                         {item.name}
                       </a>
                     ))}

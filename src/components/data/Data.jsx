@@ -14,33 +14,11 @@ export const navList = [
     path: "/services",
     text: "Services",
   },
-  {
-    id: 4,
-    path: "/rooms",
-    text: "Extend stay",
-  },
-  {
-    id: 5,
-    path: "/page",
-    text: "Explore",
-    subItems: [
-      {
-        id: 51,
-        path: "/booking",
-        text: "Booking",
-      },
-      {
-        id: 52,
-        path: "/team",
-        text: "Our Team",
-      },
-      {
-        id: 53,
-        path: "/testimonial",
-        text: "Testimonial",
-      },
-    ],
-  },
+  
+
+
+
+  
   {
     id: 6,
     path: "/contact",
@@ -50,18 +28,23 @@ export const navList = [
 export const socialIcons = [
   {
     icon: <i className="fab fa-facebook-f"></i>,
+    path: "https://www.facebook.com/",
   },
   {
     icon: <i className="fab fa-twitter"></i>,
+    path: "https://www.twitter.com/",
   },
   {
     icon: <i className="fab fa-instagram"></i>,
+    path: "https://www.instagram.com/",
   },
   {
     icon: <i className="fab fa-linkedin-in"></i>,
+    path: "https://www.linkedin.com/",
   },
   {
     icon: <i className="fab fa-youtube"></i>,
+    path: "https://www.youtube.com/",
   },
 ];
 
@@ -70,7 +53,7 @@ export const carouselData = [
     img: `${process.env.PUBLIC_URL}/assets/img/carousel-1.jpg`,
     title: "Hotel Guest Assistant",
     subtitle: "Discover Diverse Range Of Concierge Services",
-    btn1: "Request Services and amenities",
+    btn1: "Contact Front Desk",
     btn2: "Download App",
   },
   {
@@ -83,17 +66,17 @@ export const carouselData = [
 ];
 export const about = [
   {
-    icon: <i class="fa fa-hotel fa-2x text-primary mb-2"></i>,
+    icon: <i className="fa fa-hotel fa-2x text-primary mb-2"></i>,
     text: "Hotels",
     count: "7265",
   },
   {
-    icon: <i class="fa fa-users fa-2x text-primary mb-2"></i>,
+    icon: <i className="fa fa-users fa-2x text-primary mb-2"></i>,
     text: "Staffs",
     count: "44434",
   },
   {
-    icon: <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>,
+    icon: <i className="fa fa-users-cog fa-2x text-primary mb-2"></i>,
     text: "Guests",
     count: "89330",
   },
@@ -151,23 +134,23 @@ export const services = [
 {
   icon: <i class="fa fa-sign-in-alt fa-2x text-primary"></i>,
   name: "Check-In And Check-Out",
-  discription: "Skip the lines, and handle your check-in and check-out directly from your phone.",
+  description: "Skip the lines, and handle your check-in and check-out directly from your phone.",
 },
 ];
 export const team = [
   {
     image: `${process.env.PUBLIC_URL}/assets/img/team-1.jpg`,
-    name: "Marvix Santos",
+    name: "Marvin Santos",
     designation: "Advisory",
   },
   {
     image: `${process.env.PUBLIC_URL}/assets/img/team-2.jpg`,
-    name: "Ihok Antovoc",
+    name: "Ihor Antovoc",
     designation: "Deputy Advisory",
   },
   {
     image: `${process.env.PUBLIC_URL}/assets/img/team-3.jpg`,
-    name: "Ben Manuel",
+    name: "Emmanuel Abolade",
     designation: "IT Specialist",
   },
   {
@@ -184,12 +167,15 @@ export const footerItem = [
     UnitItem: [
       {
         name: "About Us",
+        path: "../pages/AboutUs.js",
       },
       {
         name: "Contact Us",
+        path: "../pages/ContactFrontDeskForm.js",
       },
       {
         name: "Privacy Policy",
+
       },
       {
         name: "Terms & Condition",
@@ -205,18 +191,23 @@ export const footerItem = [
     UnitItem: [
       {
         name: "Food & Restaurant",
+        path: "../pages/MealOrderForm.js",
       },
       {
         name: "Spa & Fitness",
+        path: "../pages/SpaFitnessForm.js",
       },
       {
         name: "Transport Assist",
+        path: "../pages/BookTaxiForm.js",
       },
       {
         name: "Tour and Attractions",
+        path: "../pages/BookTourForm.js",
       },
       {
         name: "HouseKeeping",
+        path: "../pages/HouseKeepingRequestForm.js",
       },
     ],
   },
@@ -239,17 +230,17 @@ export const footerContact = [
 
 export const contact = [
   {
-    icon: <i class="fa fa-envelope-open text-primary me-2"></i>,
+    icon: <i className="fa fa-envelope-open text-primary me-2"></i>,
     title: "Booking",
     email: "book@guestease.com",
   },
   {
-    icon: <i class="fa fa-envelope-open text-primary me-2"></i>,
+    icon: <i className="fa fa-envelope-open text-primary me-2"></i>,
     title: "Technical",
     email: "tech@guestease.com",
   },
   {
-    icon: <i class="fa fa-envelope-open text-primary me-2"></i>,
+    icon: <i className="fa fa-envelope-open text-primary me-2"></i>,
     title: "General",
     email: "info@guestease.com",
   },
@@ -260,7 +251,7 @@ export const testimonial = [
     name: "Singer Crown",
     profession: "Businessman",
     icon: (
-      <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+      <i className="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
     img: `${process.env.PUBLIC_URL}/assets/img/testimonial-1.jpg`,
   },
@@ -269,7 +260,7 @@ export const testimonial = [
     name: "Anonynmous",
     profession: "Anonymous",
     icon: (
-      <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+      <i className="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
     img: `${process.env.PUBLIC_URL}/assets/img/testimonial-2.jpg`,
   },
@@ -278,7 +269,7 @@ export const testimonial = [
     name: "Daisy Dusk",
     profession: "Profession",
     icon: (
-      <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
+      <i className="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
     img: `${process.env.PUBLIC_URL}/assets/img/testimonial-3.jpg`,
   },
@@ -290,11 +281,11 @@ export const roomItems = [
     price: "$120/night",
     name: "Junior Suit",
     star: [
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
     ],
     description: "Very comfortable for a single individual.",
     yellowbtn: "View Detail",
@@ -305,11 +296,11 @@ export const roomItems = [
     price: "$150/night",
     name: "Executive Suite",
     star: [
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
     ],
     description: "Highly recommended for a small family.",
     yellowbtn: "View Detail",
@@ -320,11 +311,11 @@ export const roomItems = [
     price: "$250/night",
     name: "Super Deluxe",
     star: [
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
-      <small class="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
+      <small className="fa fa-star text-primary"></small>,
     ],
     description: "Luxury and High class.",
     yellowbtn: "View Detail",
@@ -334,17 +325,17 @@ export const roomItems = [
 
 export const facility = [
   {
-    icon: <i class="fa fa-bed text-primary me-2"></i>,
+    icon: <i className="fa fa-bed text-primary me-2"></i>,
     quantity: 3,
     facility: "bed",
   },
   {
-    icon: <i class="fa fa-bath text-primary me-2"></i>,
+    icon: <i className="fa fa-bath text-primary me-2"></i>,
     quantity: 2,
     facility: "bath",
   },
   {
-    icon: <i class="fa fa-wifi text-primary me-2"></i>,
+    icon: <i className="fa fa-wifi text-primary me-2"></i>,
     facility: "Wifi",
   },
 ];

@@ -38,7 +38,7 @@ export default function Carousel() {
             <Slider ref={sliderRef} {...settings}>
               {carouselData.map((val, index) => (
                 <div className="carousel-item" key={index}>
-                  <img className="w-100" src={val.img} alt="Image" />
+                  <img className="w-100" src={val.img} alt={val.title} />
                   <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div className="p-3" style={{ maxWidth: "700px" }}>
                       <h6 className="section-title text-white text-uppercase mb-3 animated slideInDown">

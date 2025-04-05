@@ -28,7 +28,9 @@ const BookAnotherStayForm = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Book Another Stay</h2>
+      <h2 className="text-center">Book Another Stay</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Start Date</Form.Label>
@@ -36,6 +38,7 @@ const BookAnotherStayForm = () => {
             type="date"
             name="startDate"
             onChange={handleChange}
+            aria-label="Start Date"
           />
         </Form.Group>
         <Form.Group>
@@ -51,7 +54,7 @@ const BookAnotherStayForm = () => {
           <Form.Control
             type="text"
             name="roomType"
-            placeholder="E.g., Single, Double, Suite"
+            placeholder="E.g., Single, Double, Junior Suite, Executive Suite, Super Deluxe"
             onChange={handleChange}
           />
         </Form.Group>
@@ -66,6 +69,9 @@ const BookAnotherStayForm = () => {
         </Form.Group>
         <Button type="submit" variant="primary" className="mt-3">Submit Booking</Button>
       </Form>
+      </div>
+      </div>
+      
     </Container>
   );
 };

@@ -17,6 +17,11 @@ const ContactFrontDeskForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name || !formData.roomNumber || !formData.message) {
+      alert("Please fill out all fields before submitting.");
+      return;
+    }
+    
     try {
       await addDoc(collection(db, "frontDeskMessages"), formData);
       alert("Message submitted successfully!");
@@ -27,7 +32,9 @@ const ContactFrontDeskForm = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Contact Front Desk</h2>
+      <h2 className="text-center">Contact Front Desk</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
@@ -35,6 +42,7 @@ const ContactFrontDeskForm = () => {
             type="text"
             name="name"
             placeholder="Enter your name"
+            aria-label="Name input field"
             onChange={handleChange}
           />
         </Form.Group>
@@ -61,6 +69,8 @@ const ContactFrontDeskForm = () => {
           Submit Message
         </Button>
       </Form>
+      </div>
+      </div>
     </Container>
   );
 };

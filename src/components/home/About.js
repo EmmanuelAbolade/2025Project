@@ -1,6 +1,8 @@
 import React from "react";
 import Heading from "../common/Heading";
 import { about } from "../data/Data";
+import { Link } from "react-router-dom";
+
 
 export default function About() {
   return (
@@ -34,9 +36,17 @@ export default function About() {
                   </div>
                 ))}
               </div>
-              <a className="btn btn-primary py-3 px-5 mt-2" href="">
-                Explore More
-              </a>
+              <Link to="/contact" className="btn btn-primary py-3 px-5 mt-2 me-2">
+              Contact Us
+              </Link>
+              <Link to="/Services" className="btn btn-primary py-3 px-5 mt-2 me-2">
+              Explore Services
+              </Link>
+              <Link to="/booking" className="btn btn-primary py-3 px-5 mt-2 me-2">
+              Book Another stay
+              </Link>
+
+
             </div>
             <div className="col-lg-6">
               <div className="row g-3">
@@ -46,6 +56,7 @@ export default function About() {
                     data-wow-delay="0.1s"
                     src={`${process.env.PUBLIC_URL}/assets/img/H-1.jpg`}
                     style={{ marginTop: "25%" }}
+                    alt="Guest Ease Service Highlight"
                   />
                 </div>
                 <div className="col-6 text-start">

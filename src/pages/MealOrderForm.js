@@ -27,7 +27,9 @@ const MealOrderForm = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Meal Orders</h2>
+      <h2 className="text-center">Meal Orders</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Meal Type</Form.Label>
@@ -60,6 +62,8 @@ const MealOrderForm = () => {
           Submit Order
         </Button>
       </Form>
+      </div>
+      </div>
     </Container>
   );
 };

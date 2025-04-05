@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { Form, Button, Container } from "react-bootstrap";
+import { useAuth } from "../firebase/auth"; // Custom hook for authentication
 
 const BookTourForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const BookTourForm = () => {
     preferredDate: "",
     specialRequests: "",
   });
+
+  const { user } = useAuth(); // Get the authenticated user
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -21,6 +24,19 @@ const BookTourForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.tourName || !formData.numberOfPeople || !formData.preferredDate) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+
+
+
+    if (!user) { // Check if the user is authenticated
+      alert("You must be logged in to book a tour.");
+      return;
+    }
+
+
     try {
       await addDoc(collection(db, "tourBookings"), formData);
       alert("Tour has been booked successfully!");
@@ -31,7 +47,9 @@ const BookTourForm = () => {
 
   return (
     <Container className="mt-4">
-      <h2>Book Tour & Attractions</h2>
+      <h2 className="text-center">Book Tour & Attractions</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Tour Name</Form.Label>
@@ -39,6 +57,7 @@ const BookTourForm = () => {
             type="text"
             name="tourName"
             placeholder="E.g., City Tour, Museum Visit"
+            aria-label="Tour name input field"
             onChange={handleChange}
           />
         </Form.Group>
@@ -73,6 +92,8 @@ const BookTourForm = () => {
           Book Tour
         </Button>
       </Form>
+      </div>
+      </div>
     </Container>
   );
 };
