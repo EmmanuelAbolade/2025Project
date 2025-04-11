@@ -1,0 +1,83 @@
+import React, { useState } from "react";
+import { db } from "../firebase/firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+import { Form, Button, Container } from "react-bootstrap";
+import { auth } from "../firebase/firebaseConfig";
+
+const SpaFitnessForm = () => {
+  const [formData, setFormData] = useState({
+    spaType: "",
+    sessionTime: "",
+    specialRequests: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.spaType || !formData.sessionTime) {
+      alert("Please fill out the spa type and session time.");
+      return;
+    }
+    
+    try {
+      // Debugging: Check form data before submission
+      console.log("Form data:", formData);
+  
+      await addDoc(collection(db, "spaFitnessBookings"), formData);
+      alert("Spa & Fitness booking submitted successfully!");
+    } catch (err) {
+      console.error("Error submitting booking:", err); // Debugging
+    }
+  };
+  
+
+  return (
+    <Container className="mt-4">
+      <h2 className="text-center">Spa & Fitness Bookings</h2>
+      <div className="row justify-content-center">
+      <div className="border rounded p-1">
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Spa Type</Form.Label>
+          <Form.Control
+            type="text"
+            name="spaType"
+            placeholder="E.g., Massage, Yoga Session"
+            aria-label="Enter spa type"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Session Time</Form.Label>
+          <Form.Control
+            type="text"
+            name="sessionTime"
+            placeholder="E.g., Morning, Afternoon"
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Special Requests</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="specialRequests"
+            placeholder="Any specific preferences or needs?"
+            rows={3}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" className="mt-3">
+          Submit Booking
+        </Button>
+      </Form>
+      </div>
+      </div>
+    </Container>
+  );
+};
+
+export default SpaFitnessForm;
