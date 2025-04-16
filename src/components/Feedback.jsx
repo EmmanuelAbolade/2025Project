@@ -40,7 +40,7 @@ const Feedback = () => {
         aria-label="Feedback message input"
       ></textarea>
       <div className="mb-3">
-        <strong>Rate Us:</strong>
+        <strong>Rate Us :</strong>
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
@@ -51,7 +51,7 @@ const Feedback = () => {
           </button>
         ))}
       </div>
-      <button className="btn btn-primary mt-3" onClick={handleFeedbackSubmit}>
+      <button className="btn btn-primary d-flex justify-content-between mb-5 mt-5" onClick={handleFeedbackSubmit}>
         Submit Feedback
       </button>
     </div>

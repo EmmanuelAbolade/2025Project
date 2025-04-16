@@ -15,7 +15,11 @@ export const navList = [
     text: "Services",
   },
   
-
+  { 
+    id:4,
+    path: "/recommendations", 
+    text: "Recommendations", 
+  },
 
 
   

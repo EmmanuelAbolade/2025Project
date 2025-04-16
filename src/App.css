@@ -73,3 +73,12 @@ button:disabled {
   background-color: #cccccc;
   color: #666666;
 }
+
+.form-control {
+  pointer-events: auto;
+  z-index: 1;
+}
+
+input {
+  touch-action: manipulation;
+}

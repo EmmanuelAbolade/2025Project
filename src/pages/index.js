@@ -12,6 +12,8 @@ import Services from "./ServicesPage";
 import GuestDashboard from "./GuestDashboard";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
+import HousekeepingRequestForm from "./HouseKeepingRequestForm";
+
 
 //Components used across pages
 import Home from "../components/home/Home";
@@ -33,7 +35,8 @@ export {
   //added 8/4/2025 10:05am
   GuestDashboard,
   StaffDashboard,
-  AdminDashboard
+  AdminDashboard,
+  HousekeepingRequestForm
  
   
   

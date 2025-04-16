@@ -1,8 +1,6 @@
 //App.js to hide nav bar and footer in login and sign up pages before problem started
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
-
 import "./css/style.css";
 import "./css/bootstrap.min.css";
 import "./css/animate.css";
@@ -37,6 +35,7 @@ import BookAnotherStayForm from "./pages/BookAnotherStayForm";
 import BookTaxiForm from "./pages/BookTaxiForm";
 import BookTourForm from "./pages/BookTourForm";
 import ShopInHotelForm from "./pages/ShopInHotelForm";
+import RecommendationsPage from "./pages/RecommendationsPage";
 
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -247,6 +246,7 @@ useEffect(() => {
         <Route path="/book-taxi" element={<BookTaxiForm />} />
         <Route path="/book-tour" element={<BookTourForm />} />
         <Route path="/shop-in-hotel" element={<ShopInHotelForm />} />
+        <Route path="/recommendations" element={<RecommendationsPage />} />
 
         {/* Authentication Pages */}
         <Route path="/signup" element={<SignUp />} />

@@ -1,0 +1,33 @@
+[33m58af3f78[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgh-pages[m[33m, [m[1;31morigin/gh-pages[m[33m)[m HEAD@{0}: commit: Removed cached gh-pages directory from node_modules
+[33m9936036d[m HEAD@{1}: commit: Updated project with new features and bug fixes
+[33m9b10d7e6[m HEAD@{2}: checkout: moving from master to gh-pages
+[33m3039d30c[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{3}: checkout: moving from gh-pages to master
+[33m9b10d7e6[m HEAD@{4}: pull origin gh-pages: Fast-forward
+[33mc3cabbc0[m HEAD@{5}: checkout: moving from master to gh-pages
+[33m3039d30c[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{6}: commit: Update role-based login and added Explore System feature
+[33me90fde80[m HEAD@{7}: commit: Track large files with Git LFS
+[33m22bcbda2[m HEAD@{8}: commit: Apply stashed changes after rebase
+[33mc3cabbc0[m HEAD@{9}: rebase (finish): returning to refs/heads/master
+[33mc3cabbc0[m HEAD@{10}: rebase (start): checkout gh-pages
+[33m64fc5de8[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m HEAD@{11}: checkout: moving from gh-pages to master
+[33mc3cabbc0[m HEAD@{12}: reset: moving to HEAD
+[33mc3cabbc0[m HEAD@{13}: commit: Add latest build and update .gitignore
+[33m0b2ac669[m HEAD@{14}: Branch: renamed refs/heads/gh-pages to refs/heads/gh-pages
+[33m0b2ac669[m HEAD@{16}: commit: Add latest build
+[33m199ccb25[m HEAD@{17}: commit: Have a working Guest, Staff,and Admin Dashboards which can be accessed after login. Data bases connection set up and working. Some changes to the look of the website to make it simple and have a calming effect. Sign up and Login form for authetication added. Included is account-profiles, Messaging, Announcement and Feedback within the dashboards.Included also are pages for different requests for services such as Booking another stay, Booking taxi, Booking Tour, Contacting front desk, HouseKeeping requests, shop in-hotel, Meal Order and Spa Bookings.
+[33m64fc5de8[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m HEAD@{18}: merge master: Fast-forward
+[33m0ac07d72[m HEAD@{19}: checkout: moving from master to gh-pages
+[33m64fc5de8[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m HEAD@{20}: checkout: moving from gh-pages to master
+[33m0ac07d72[m HEAD@{21}: checkout: moving from main to gh-pages
+[33m64fc5de8[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m HEAD@{22}: Branch: renamed refs/heads/master to refs/heads/main
+[33m64fc5de8[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m HEAD@{24}: commit: Updated Services page with links to forms and fixed routing issues
+[33m0ac07d72[m HEAD@{25}: merge gh-pages: Fast-forward
+[33m19c84fce[m HEAD@{26}: checkout: moving from gh-pages to master
+[33m0ac07d72[m HEAD@{27}: commit: Form Pages for Booking Another stay, Taxi, Tour and attraction, HouseKeeping, MealOrder, Shop in hotel and spa fitness were created and successful connection to firestore database was established
+[33m9ece9f73[m HEAD@{28}: commit: Updated image paths and redeploy
+[33m65d7c082[m HEAD@{29}: commit: Update image paths and redeploy
+[33m532d15a8[m HEAD@{30}: commit: Deploy website to GitHub Pages
+[33md729da59[m HEAD@{31}: commit: Deploy website to Github pages
+[33m19c84fce[m HEAD@{32}: checkout: moving from gh-pages to gh-pages
+[33m19c84fce[m HEAD@{33}: checkout: moving from master to gh-pages
+[33m19c84fce[m HEAD@{34}: commit (initial): Update Project

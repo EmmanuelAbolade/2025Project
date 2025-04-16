@@ -10,6 +10,7 @@ export default function Header() {
   const [navbarCollapse, setNavbarCollapse] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [role, setRole] = useState(null);
+  const [roleLoading, setRoleLoading] = useState(true); // Initialize state for role loading
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ export default function Header() {
         //added 9/4/2025 at 8:20am
         setRole(null);
       }
+      setRoleLoading(false); // Role fetching is complete added 16/4/2025
     };
 
     fetchUserRole();
@@ -45,6 +47,15 @@ export default function Header() {
     setActiveDropdown(null);
   };
 
+
+  // Show a loading message while the role is being fetched
+  if (roleLoading) {
+    return (
+      <div className="container-fluid bg-dark px-0 text-center text-white py-2">
+        Loading Navbar...
+      </div>
+    );
+  }
 
    // Dynamically add dashboard link based on role
    const navItems = [...navList];
