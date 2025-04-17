@@ -1,17 +1,60 @@
+//src\pages\StaffDashboard.jsx
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs, Button, Table } from "react-bootstrap";
 import StaffMessages from "../components/StaffMessages";
 import StaffAnnouncements from "../components/StaffAnnouncements";
 import StaffProfile from "../components/StaffProfile";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { db } from "../firebase/firebaseConfig";
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebaseConfig";
+import { collection, query, where, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
+import DashboardGreeting from "../components/DashboardGreeting";
 
 const StaffDashboard = () => {
   const [requests, setRequests] = useState([]);
   const [status, setStatus] = useState("Available"); // Staff availability status
   const [loading, setLoading] = useState(true);
-  const currentStaffId = "currentStaff.uid"; // Replace with the authenticated staff's ID
+  const [staffName, setStaffName] = useState("Staff");
+  // Use the authenticated user's ID rather than a hard-coded string.
+  const currentStaffId = auth.currentUser ? auth.currentUser.uid : "currentStaff.uid"; 
+  // Fetch the staff name from Firestore (assuming data exists in the "users" collection)
+  useEffect(() => {
+    const fetchStaffName = async () => {
+      if (auth.currentUser) {
+        try {
+          const staffDoc = await getDoc(doc(db, "users", currentStaffId));
+          if (staffDoc.exists()) {
+            const data = staffDoc.data();
+            setStaffName(data.name || "Staff");
+          }
+        } catch (error) {
+          console.error("Error fetching staff name:", error);
+        }
+      }
+    };
+    fetchStaffName();
+  }, [currentStaffId]);
+
+  // Fetch assigned requests from Firestore
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const q = query(
+          collection(db, "housekeepingRequests"),
+          where("assignedStaff", "==", currentStaffId)
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedRequests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setRequests(fetchedRequests);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+      setLoading(false);
+    };
+    fetchRequests();
+  }, [currentStaffId]);
+  /*
+  //commented 17/4/2025
+  // const currentStaffId = "currentStaff.uid"; // Replace with the authenticated staff's ID
 
   // Fetch assigned requests from Firestore
   useEffect(() => {
@@ -26,10 +69,10 @@ const StaffDashboard = () => {
         console.error("Error fetching requests:", error);
       }
     };
-
+    
     fetchRequests();
   }, [currentStaffId]);
-
+*/
   const updateRequestStatus = async (id, newStatus) => {
     // Update the status of a specific request
     try {
@@ -53,7 +96,11 @@ const StaffDashboard = () => {
   return (
     <div className="container mt-5">
       <h1>Staff Dashboard</h1>
-      <p>Welcome, Staff! Manage your profile, guest messages, announcements, and requests here.</p>
+      {/* Replace the static greeting with DashboardGreeting */}
+      <DashboardGreeting
+        title="Manage your profile, guest messages, announcements, and requests here."
+        name={staffName}
+      />
 
       {/* Staff Availability Toggle */}
       <div className="mb-3">

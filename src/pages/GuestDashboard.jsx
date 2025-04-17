@@ -1,4 +1,4 @@
-
+//src\pages\GuestDashboard.jsx
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase/firebaseConfig";
 import { db } from "../firebase/firebaseConfig";
@@ -9,6 +9,7 @@ import Announcements from "../components/Announcements";
 import Feedback from "../components/Feedback";
 import Messages from "../components/Messages";
 import RequestBank from "../components/RequestBank";
+import DashboardGreeting from "../components/DashboardGreeting";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const GuestDashboard = () => {
@@ -39,11 +40,14 @@ const GuestDashboard = () => {
         </div>
       ) : (
         <>
-          <h1>Welcome, {guestName}!</h1>
-          <h5>Room Number: {roomNumber}</h5>
-          <p>
-            Here's your personalized dashboard. Manage your profile, view requests, and explore announcements.
-          </p>
+         <h1>GUEST DASHBOARD</h1>
+        {/* Replace static headers with DashboardGreeting */}
+        <DashboardGreeting
+            title=" Here's your personalized dashboard. Manage your profile, view your requests, send messages and explore announcements."
+            name={guestName}
+            
+          />
+
           <Tabs defaultActiveKey="profile" className="mb-3">
             <Tab eventKey="profile" title="Profile" aria-label="View and edit your profile">
               <UserProfile />

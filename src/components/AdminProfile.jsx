@@ -1,15 +1,12 @@
-// src/components/StaffProfile.jsx
-
+// src/components/AdminProfile.jsx
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase/firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc,setDoc, updateDoc } from "firebase/firestore";
 import { serverTimestamp } from "firebase/firestore";
 import { Card, Form, Button, Spinner, Image } from "react-bootstrap";
 import CloudinaryUpload from "./CloudinaryUpload";
 
-const StaffProfile = () => {
-  // We initialize the profile with enhanced fields:
-  // name, email, profilePic, and bio.
+const AdminProfile = () => {
   const [profile, setProfile] = useState({
     name: "",
     email: "",
@@ -25,7 +22,8 @@ const StaffProfile = () => {
       const user = auth.currentUser;
       if (user) {
         try {
-          const docSnap = await getDoc(doc(db, "users", user.uid));
+          // Assuming your admin data is stored in "admins" collection
+          const docSnap = await getDoc(doc(db, "admins", user.uid));
           if (docSnap.exists()) {
             const data = docSnap.data();
             setProfile({
@@ -36,7 +34,7 @@ const StaffProfile = () => {
             });
           }
         } catch (error) {
-          console.error("Error fetching profile:", error);
+          console.error("Error fetching admin profile:", error);
         }
       }
       setLoading(false);
@@ -55,13 +53,22 @@ const StaffProfile = () => {
     const user = auth.currentUser;
     if (user) {
       try {
-        await updateDoc(doc(db, "users", user.uid), {
+
+        await setDoc(
+            doc(db, "admins", user.uid),
+            { ...profile, updatedAt: serverTimestamp() },
+            { merge: true }
+          );
+          setEditing(false);
+          alert("Profile updated successfully!");
+        /*await updateDoc(doc(db, "admins", user.uid), {
           ...profile,
           updatedAt: serverTimestamp(),
         });
         setEditing(false);
         alert("Profile updated successfully!");
-      } catch (error) {
+      */
+        } catch (error) {
         console.error("Error updating profile:", error);
         alert("Profile update failed!");
       }
@@ -80,7 +87,7 @@ const StaffProfile = () => {
   return (
     <Card className="m-3 shadow-sm">
       <Card.Header>
-        <h3>Staff Profile</h3>
+        <h3>Admin Profile</h3>
       </Card.Header>
       <Card.Body>
         {editing ? (
@@ -95,11 +102,20 @@ const StaffProfile = () => {
                 }
               />
             </Form.Group>
+            <div className="d-flex justify-content-between mb-3 mt-3">
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              {/* Email remains read-only once set */}
-              <Form.Control type="email" value={profile.email} readOnly />
+              {/* Email is read-only */}
+              <Form.Control type="email" value={profile.email} readOnly 
+              style={{
+                backgroundColor: "#f8f9fa", // light gray background
+                border: "1px solid #ced4da",
+                color: "#495057",
+                cursor: "not-allowed"
+              }}
+              />
             </Form.Group>
+            </div>
             <Form.Group className="mb-3">
               <Form.Label>Bio</Form.Label>
               <Form.Control
@@ -196,95 +212,133 @@ const StaffProfile = () => {
   );
 };
 
-export default StaffProfile;
+export default AdminProfile;
 
 
-
-
-/*
-//commented 1742025 at 10:50am
+/* comment 17/4/2025
+// src/components/AdminProfile.jsx
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase/firebaseConfig";
-import { db } from "../firebase/firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { serverTimestamp } from "firebase/firestore";
 import { Card, Form, Button, Spinner, Image } from "react-bootstrap";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 import CloudinaryUpload from "./CloudinaryUpload";
+import { serverTimestamp } from "firebase/firestore";
 
-const StaffProfile = () => {
-  const [profile, setProfile] = useState(null);
+const AdminProfile = () => {
+  // admin’s document has a constant ID
+  const adminId = "adminUniqueID"; // REPLACE with the actual ID or obtain it from your authentication flow
+
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    profilePic: "",
+    bio: "",
+    // You can add additional fields as needed (phone, role, etc.)
+  });
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
+  // Fetch the admin profile on component mount
   useEffect(() => {
-    const fetchStaffProfile = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const profileDoc = await getDoc(doc(db, "users", user.uid));
-        setProfile(profileDoc.data());
-        setName(profileDoc.data()?.name || "");
+    const fetchAdminProfile = async () => {
+      
+      try {
+        const docRef = doc(db, "admins", adminId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProfile(docSnap.data());
+        }
+      } catch (error) {
+        console.error("Error fetching admin profile:", error);
       }
-      setLoading(false); // Hide loading spinner after data is fetched
+      setLoading(false);
     };
-    fetchStaffProfile();
-  }, []);
 
-  const handleUpdateProfile = async () => {
-    if (!name.trim()) {
-      alert("Name cannot be empty.");
-      return;
-    }
-    
-    const user = auth.currentUser;
-    if (user) {
-      const profileRef = doc(db, "users", user.uid);
-      await updateDoc(profileRef, { name, updatedAt: serverTimestamp()  });
-      setProfile((prev) => ({ ...prev, name }));
-      setEditing(false);
-      alert("Profile updated successfully!");
-    }
+    fetchAdminProfile();
+  }, [adminId]);
 
-    
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      await updateDoc(doc(db, "admins", adminId), profile);
+      alert("Profile updated successfully");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Update failed");
+    }
+    setSaving(false);
   };
 
+  if (loading) return <Spinner animation="border" />;
+
   return (
-    <div className="mt-4 p-4 border rounded shadow-sm bg-light">
-      {loading ? (
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      ) : (
-        <>
-          <h3>Staff Profile</h3>
-          {editing ? (
-            <>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="form-control mb-3"
-                aria-label="Name input field"
-              />
-              <button className="btn btn-primary me-2" onClick={handleUpdateProfile}>
-                Save
-              </button>
-              <button className="btn btn-secondary" onClick={() => setEditing(false)}>
-                Cancel
-              </button>
-            </>
-          ) : (
-            <>
-              <p><strong>Name:</strong> {profile?.name || "Not provided"}</p>
-              <p><strong>Email:</strong> {profile?.email || "Not provided"}</p>
-              <button className="btn btn-primary" onClick={() => setEditing(true)}>Edit Profile</button>
-            </>
-          )}
-        </>
-      )}
-    </div>
+    <Card className="m-3 shadow-sm">
+      <Card.Header>
+        <h3>Admin Profile</h3>
+      </Card.Header>
+      <Card.Body>
+        <Form onSubmit={handleSave}>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={profile.name}
+              onChange={(e) =>
+                setProfile({ ...profile, name: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={profile.email}
+              onChange={(e) =>
+                setProfile({ ...profile, email: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Profile Picture</Form.Label>
+            <div className="mb-2">
+              {profile.profilePic ? (
+                <Image
+                  src={profile.profilePic}
+                  roundedCircle
+                  width="120"
+                  height="120"
+                  alt="Admin Profile"
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    backgroundColor: "#e9ecef",
+                    borderRadius: "50%"
+                  }}
+                />
+              )}
+            </div>
+            <CloudinaryUpload
+              onUploadComplete={(url) =>
+                setProfile({ ...profile, profilePic: url })
+              }
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-between mb-5 mt-5">
+          <Button type="submit" variant="primary" disabled={saving}>
+            {saving ? "Saving..." : "Save Profile"}
+          </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default StaffProfile;
+export default AdminProfile;
 */

@@ -207,7 +207,7 @@ const AdminRecommendations = () => {
             </Form.Group>
       {/* Cloudinary Upload for Image */}
       <Form.Group className="mb-3">
-        <Form.Label>Image</Form.Label>
+        <Form.Label></Form.Label>
         <CloudinaryUpload
           onUploadComplete={(url) =>
             setCurrentRec((prev) => ({ ...prev, image: url }))

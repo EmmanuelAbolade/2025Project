@@ -1,3 +1,4 @@
+// src/components/common/Footer.jsx
 import { Link } from "react-router-dom";
 import { footerContact, footerItem, socialIcons } from "../data/Data";
 //import Newsletter from "../home/Newsletter";
@@ -5,9 +6,8 @@ import { footerContact, footerItem, socialIcons } from "../data/Data";
 export default function Footer() {
   return (
     <>
-      
       <div
-        className="container-fluid text-light text-decoration-none footer wow fadeIn "
+        className="container-fluid text-light text-decoration-none footer wow fadeIn"
         data-wow-delay="0.1s"
       >
         <div className="container pb-3">
@@ -18,8 +18,8 @@ export default function Footer() {
                   <h1 className="text-white text-uppercase mb-3">Guest Ease</h1>
                 </Link>
                 <p className="text-white mb-0">
-                Providing convenient, efficient, and personalized services to guests. 
-                Thank you for choosing us. We look forward to serving you and making every experience exceptional.
+                  Providing convenient, efficient, and personalized services to guests.
+                  Thank you for choosing us. We look forward to serving you and making every experience exceptional.
                 </p>
               </div>
             </div>
@@ -34,7 +34,7 @@ export default function Footer() {
               ))}
               <div className="d-flex pt-2">
                 {socialIcons.slice(0, 4).map((val, index) => (
-                  <a className="btn btn-outline-light btn-social" href="">
+                  <a key={index} className="btn btn-outline-light btn-social" href="">
                     {val.icon}
                   </a>
                 ))}
