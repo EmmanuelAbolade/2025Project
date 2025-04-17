@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { initializeFCM } from "./initializeFCM";
-
+import { HashRouter } from "react-router-dom"; // <-- import HashRouter
 
 // Initialize FCM on app load
 initializeFCM();
@@ -15,7 +15,9 @@ if (!rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </React.StrictMode>
   );
 }
