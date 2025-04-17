@@ -1,6 +1,7 @@
-//App.js to hide nav bar and footer in login and sign up pages before problem started
+// src/App.js
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+// Remove the BrowserRouter import since we don't need a nested router here
+// import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./css/style.css";
 import "./css/bootstrap.min.css";
 import "./css/animate.css";
@@ -9,8 +10,6 @@ import "./App.css";
 
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-
-
 
 import {
   Home,
@@ -22,9 +21,6 @@ import {
   Room,
   Team,
   Testimonial,
-
-
-
 } from "./pages/index";
 
 import HouseKeepingRequestForm from "./pages/HouseKeepingRequestForm";
@@ -40,7 +36,6 @@ import RecommendationsPage from "./pages/RecommendationsPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 
-
 import GuestDashboard from "./pages/GuestDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -51,23 +46,16 @@ import { auth } from "./firebase/firebaseConfig";
 import { db } from "./firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+
 function AppContent() {
   const location = useLocation(); // Get the current route
   const hideNavbarAndFooter = ["/signup", "/login"]; // Routes to hide navbar and footer
 
-
-  //added 8/4/2025 at 10:05am
   const [currentUser, setCurrentUser] = useState(null);
-
-
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
-
-
-
-  //added 11/4/2025 at 12.30pm
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -83,144 +71,35 @@ function AppContent() {
         setCurrentUser(null);
         setRole(null);
       }
-      setLoading(false); // Update loading state
+      setLoading(false);
     });
-  
+
     return unsubscribe;
   }, []);
-  
 
-/*
-//added 9/4/2025 at 8:20am commente 11/4/2025
-useEffect(() => {
-  const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      setCurrentUser(user);
-      try {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        
-        const userRole = userDoc.data()?.role || null;
-        setRole(userRole);
-
-        // Redirect to the dashboard based on the user's role
-        if (userRole === "guest") {
-          window.location.replace("/guest-dashboard");
-        } else if (userRole === "staff") {
-          window.location.replace("/staff-dashboard");
-        } else if (userRole === "admin") {
-          window.location.replace("/admin-dashboard");
-        }
-      } catch (error) {
-        console.error("Error fetching user role:", error);
-      }
-    } else {
-      setCurrentUser(null);
-      setRole(null);
-    }
-    setLoading(false);
-  });
-
-  return unsubscribe;
-}, []);
-*/
-
-
-
-/* commented 9/4/2025 at 8:20am
-//added 8/4/2025 at 10:05am
-useEffect(() => {
-  // Listen to auth state changes
-  const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      try {
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      setCurrentUser(user);
-      setRole(userDoc.data()?.role || null); // Fetch and set the user's role
-    } catch (error) {
-      console.error("Error fetching user role:", error);
-    }
-    } else {
-      setCurrentUser(null);
-      setRole(null);
-    }
-    setLoading(false);
-  });
-  return () => unsubscribe();
-}, []);
-*/
-
-//commented to cancel out 8/4/2025 at 10:05am
- /* useEffect(() => {
-    const fetchUserRole = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        setRole(userDoc.data()?.role || null);
-      }
-      setLoading(false);
-    };
-
-    fetchUserRole();
-  }, []); */
-
-
-
-
-/* //old not working
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        setRole(userDoc.data()?.role || null);
-      } else {
-        setRole(null);
-      }
-      setLoading(false);
-    });
-    return () => unsubscribe(); // Cleanup subscription
-  }, []);
-*/
-/*
   if (loading) {
     return (
       <div className="container text-center mt-5">
-        <div 
-          className="spinner-border text-primary" 
+        <div
+          className="spinner-border text-primary"
           role="status"
-          aria-label="Loading user role...">
-          <span className="visually-hidden">Loading...</span>
+          aria-label="Loading user role..."
+        ></div>
+        <div className="loading-container" style={{ textAlign: "center", marginTop: "200px" }}>
+          <p style={{ fontSize: "18px", fontWeight: "bold", color: "#123456" }}>
+            GUEST-EASE Loading... Please wait.
+          </p>
+          <p style={{ fontSize: "18px", fontWeight: "bold", color: "#177370" }}>
+            WELCOME ON BOARD. YOUR COMFORT IS OUR PRIORITY.
+          </p>
+          <p style={{ fontSize: "18px", fontWeight: "bold", color: "#177370" }}>
+            Enjoy a seamless stay using <strong>GUEST-EASE</strong>. Our Concierge Assistant is just a tap away for all your requests!
+            Available 24/7 to enhance your stay every step of the way!
+          </p>
         </div>
       </div>
     );
   }
-
-/*
-    if (loading) {
-      return null; // No spinner or delay
-    }
- */   
-    if (loading) {
-      return (
-        <div className="container text-center mt-5">
-          <div 
-          className="spinner-border text-primary" 
-          role="status"
-          aria-label="Loading user role..."></div>
-          <div className="loading-container" style={{ textAlign: "center", marginTop: "200px" }}>
-            <p style={{ fontSize: "18px", fontWeight: "bold", color: "#123456" }}>
-              GUEST-EASE Loading... Please wait.
-            </p>
-            <p style={{ fontSize: "18px", fontWeight: "bold", color: "#177370" }}>WELCOME ON BOARD. YOUR COMFORT IS OUR PRIORITY. </p>
-            <p style={{ fontSize: "18px", fontWeight: "bold", color: "#177370" }}> Enjoy a seamless stay Using <strong>GUEST-EASE.</strong> Our Concierge 
-              Assistant is just a tap away for all your requests!" 
-              Available 24/7 to enhance your stay every step of the way!"</p>
-          </div>
-        </div>
-      );
-    }
-    
-
-
 
   return (
     <>
@@ -235,7 +114,6 @@ useEffect(() => {
         <Route path="/testimonial" element={<Testimonial />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        
 
         {/* Forms */}
         <Route path="/housekeeping" element={<HouseKeepingRequestForm />} />
@@ -284,7 +162,6 @@ useEffect(() => {
         {/* Catch-all for Undefined Routes */}
         <Route path="*" element={<Navigate to="/" />} />
 
-
         {/* Fallback - Default to 404 */}
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
@@ -293,13 +170,7 @@ useEffect(() => {
   );
 }
 
+// Remove the nested <Router> here:
 export default function App() {
-  return (
-   // Code removed 9/4/25 at 6:45am
-   
-    //<Router basename="/2025Project">
-   <Router>
-      <AppContent />
-    </Router>
-  );
+  return <AppContent />;
 }

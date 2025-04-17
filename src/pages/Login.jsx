@@ -1,57 +1,37 @@
+// src/pages/Login.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { db } from "../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
-
-import { Link } from "react-router-dom";
-
-
 import InputField from "../components/common/InputField";
 import FormButton from "../components/common/FormButton";
-
-//const db = getFirestore();
+import { Spinner} from "react-bootstrap";
+// Optionally import your custom CSS for authentication pages
+// import "../css/auth.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [loading] = useState();
 
   const handleLogin = async () => {
-    //e.preventDefault();
-    //console.log("Login button clicked"); // Debugging
-    
-    // Validate email and password
     if (!email.trim() || !password.trim()) {
       setError("Please enter both email and password.");
       return;
     }
-
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
-      /// Debugging: Verify user
-      //console.log("User logged in:", user);
-  
-      /// Fetch role from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      
-      //console.log("Fetched document:", userDoc.data()); // Debugging
-  
-      
       const role = userDoc.data()?.role;
-    if (!role) {
-      throw new Error("No role assigned to this user in Firestore");
-    }
-
-
-      //console.log("Role fetched:", role); // Debugging
-  
-      /// Redirect based on role
+      if (!role) {
+        throw new Error("No role assigned to this user in Firestore");
+      }
+      // Redirect based on role
       if (role === "guest") {
         navigate("/guest-dashboard");
       } else if (role === "staff") {
@@ -61,58 +41,80 @@ const Login = () => {
       } else {
         navigate("/");
       }
-    } catch (error) {
-      //console.error("Login error:", error); // Debugging
-      if (error.code === "auth/user-not-found") {
+    } catch (err) {
+      // Display friendly error messages
+      if (err.code === "auth/user-not-found") {
         setError("No account found with this email.");
-      } else if (error.code === "auth/wrong-password") {
+      } else if (err.code === "auth/wrong-password") {
         setError("Incorrect password. Please try again.");
       } else {
         setError("An unexpected error occurred. Please try again.");
       }
     }
   };
-  
+
+  if (loading) {
+    return (
+      <div className="text-center mt-4">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
+
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="col-md-6">
-        <div className="card shadow p-4 rounded">
-          <h2 className="text-center mb-4 text-primary">Login</h2>
-          <InputField
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mb-3"
-            aria-label="Enter your email"
-          />
-          <InputField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mb-3"
-          />
-          <FormButton text="Login" onClick={handleLogin} className="w-100 mb-3" />
-          {error && <p className="text-danger text-center">{error}</p>}
-          <p className="mt-3 text-center">
-            Don't have an account?{" "}
-            <a href="/signup" className="text-decoration-none">
-              Sign up here
-            </a>
-          </p>
-          <p className="mt-3 text-center">
-              Forgot your password?{" "}
-            <a href="/password-reset" className="text-decoration-none">
-              Reset it here
-            </a>
-          </p>
-          {/* Add Explore System Link/Button */}
-      <p>
-        <Link to="/" className="explore-link text-decoration-none">
-          Explore Our App
-        </Link>
-      </p>
+    <div
+      className="auth-page d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh", background: "#f7f8fa" }}
+    >
+      <div
+        className="card shadow-sm p-4 auth-card"
+        style={{ maxWidth: "400px", width: "100%", borderRadius: "8px", background: "#fff" }}
+      >
+        <h2 className="text-center text-primary mb-4" style={{ fontWeight: 600 }}>
+          Login
+        </h2>
+        <InputField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="mb-3"
+          placeholder="Enter your email"
+        />
+        <InputField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="mb-3"
+          placeholder="Enter your password"
+        />
+        <FormButton text="Login" onClick={handleLogin} className="w-100 mb-3 btn btn-primary" />
+        {error && <p className="text-danger text-center">{error}</p>}
+        <p className="mt-3 text-center" style={{ fontSize: "0.9rem" }}>
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-decoration-none text-primary"
+            style={{ fontWeight: 500 }}
+          >
+            Sign up here
+          </Link>
+        </p>
+        <p className="mt-1 text-center" style={{ fontSize: "0.9rem" }}>
+          Forgot your password?{" "}
+          <Link
+            to="/password-reset"
+            className="text-decoration-none text-primary"
+            style={{ fontWeight: 500 }}
+          >
+            Reset it here
+          </Link>
+        </p>
+        <div className="text-center mt-3">
+          <Link to="/" className="explore-link text-decoration-none text-muted fw-bold fs-6">
+            Explore Our App
+          </Link>
         </div>
       </div>
     </div>
@@ -120,41 +122,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-/*
-  return (
-    <div className="container mt-5">
-      <h2>Login</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Login</button>
-      </form>
-    </div>
-  );
-};
-
-export default Login;*/
