@@ -1,7 +1,5 @@
 // src/App.js
 import React, { useEffect, useState } from "react";
-// Remove the BrowserRouter import since we don't need a nested router here
-// import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./css/style.css";
 import "./css/bootstrap.min.css";
 import "./css/animate.css";
@@ -48,13 +46,26 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
+// Import the onMessageListener to listen for foreground FCM messages
+import { onMessageListener } from "./initializeFCM";
+
 function AppContent() {
-  const location = useLocation(); // Get the current route
-  const hideNavbarAndFooter = ["/signup", "/login"]; // Routes to hide navbar and footer
+  const location = useLocation();
+  const hideNavbarAndFooter = ["/signup", "/login"];
 
   const [currentUser, setCurrentUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // NEW: Setup a foreground FCM message listener
+  useEffect(() => {
+    onMessageListener()
+      .then((payload) => {
+        console.log("Foreground message received:", payload);
+        // OPTIONAL: You can update your UI or show an in-app notification here.
+      })
+      .catch((err) => console.error("Error receiving foreground FCM message:", err));
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -93,8 +104,8 @@ function AppContent() {
             WELCOME ON BOARD. YOUR COMFORT IS OUR PRIORITY.
           </p>
           <p style={{ fontSize: "18px", fontWeight: "bold", color: "#177370" }}>
-            Enjoy a seamless stay using <strong>GUEST-EASE</strong>. Our Concierge Assistant is just a tap away for all your requests!
-            Available 24/7 to enhance your stay every step of the way!
+            Enjoy a seamless stay using <strong>GUEST-EASE</strong>. Our Concierge Assistant is just a tap away
+            for all your requests! Available 24/7 to enhance your stay every step of the way!
           </p>
         </div>
       </div>
@@ -170,7 +181,6 @@ function AppContent() {
   );
 }
 
-// Remove the nested <Router> here:
 export default function App() {
   return <AppContent />;
 }

@@ -1,3 +1,24 @@
+// src/components/GuestMessages.jsx
+import React from "react";
+import ChatWindow from "./ChatWindow";
+
+const GuestMessages = () => {
+  return <ChatWindow currentUserId="guest" senderLabel="Guest" />;
+};
+
+export default GuestMessages;
+
+
+
+
+
+
+
+
+
+
+
+/* //commented 18/4/2025 at 3.30pm
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { auth } from "../firebase/firebaseConfig";
@@ -55,7 +76,9 @@ const Messages = () => {
           messages.map((msg) => (
             <div key={msg.id} className="mb-2">
               <div className="d-flex align-items-center mb-1">
-                {/* Display Avatar or Initials */}
+                
+              
+              {/* Display Avatar or Initials *
                 <div
                   className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
                   style={{ width: "40px", height: "40px", marginRight: "10px" }}
@@ -72,7 +95,8 @@ const Messages = () => {
                 <small className="text-muted">Replying to message ID: {msg.replyTo}</small>
               )}
               <small className="text-muted">{new Date(msg.timestamp?.toDate()).toLocaleString()}</small>
-              {/* Reply Button */}
+             
+              {/* Reply Button *
               {msg.senderId !== auth.currentUser?.uid && (
                 <button
                   className="btn btn-sm btn-link text-primary"
@@ -105,3 +129,4 @@ const Messages = () => {
 };
 
 export default Messages;
+*/

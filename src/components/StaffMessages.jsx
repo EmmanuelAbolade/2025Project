@@ -1,3 +1,18 @@
+
+// src/components/StaffMessages.jsx
+import React from "react";
+import ChatWindow from "./ChatWindow";
+
+const StaffMessages = () => {
+  return <ChatWindow currentUserId="staff" senderLabel="Staff" />;
+};
+
+export default StaffMessages;
+
+
+
+
+/* //commented 18/4/2025 at 3.30pm
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, onSnapshot, addDoc, query, orderBy } from "firebase/firestore";
@@ -90,3 +105,4 @@ const StaffMessages = () => {
 };
 
 export default StaffMessages;
+*/

@@ -7,7 +7,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import UserProfile from "../components/UserProfile";
 import Announcements from "../components/Announcements";
 import Feedback from "../components/Feedback";
-import Messages from "../components/Messages";
+import Messages from "../components/GuestMessages";
 import RequestBank from "../components/RequestBank";
 import DashboardGreeting from "../components/DashboardGreeting";
 import 'bootstrap/dist/css/bootstrap.min.css';

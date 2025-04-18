@@ -102,20 +102,13 @@ const AdminProfile = () => {
                 }
               />
             </Form.Group>
-            <div className="d-flex justify-content-between mb-3 mt-3">
+            
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              {/* Email is read-only */}
-              <Form.Control type="email" value={profile.email} readOnly 
-              style={{
-                backgroundColor: "#f8f9fa", // light gray background
-                border: "1px solid #ced4da",
-                color: "#495057",
-                cursor: "not-allowed"
-              }}
-              />
+              {/* Email is read-only once set*/}
+              <Form.Control type="email" value={profile.email} readOnly />
             </Form.Group>
-            </div>
+            
             <Form.Group className="mb-3">
               <Form.Label>Bio</Form.Label>
               <Form.Control

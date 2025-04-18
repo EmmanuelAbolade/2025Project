@@ -136,7 +136,7 @@ export const services = [
     link: "/shop-in-hotel",
   },
 {
-  icon: <i class="fa fa-sign-in-alt fa-2x text-primary"></i>,
+  icon: <i className="fa fa-sign-in-alt fa-2x text-primary"></i>,
   name: "Check-In And Check-Out",
   description: "Skip the lines, and handle your check-in and check-out directly from your phone.",
 },
