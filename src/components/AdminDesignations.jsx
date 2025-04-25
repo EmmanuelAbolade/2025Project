@@ -131,7 +131,7 @@ const AdminDesignations = () => {
 
   return (
     <div className="container my-4">
-      <h2>Staff Assignment & Designation</h2>
+      <h2 class= "text-start">Staff Assignment & Designation</h2>
       <Button variant="primary" onClick={() => handleOpenModal()}>
         Add Designation
       </Button>

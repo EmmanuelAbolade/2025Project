@@ -12,7 +12,24 @@ const AdminUsers = () => {
   const [showModal, setShowModal] = useState(false);
   const [editName, setEditName] = useState("");
   const [editRoom, setEditRoom] = useState("");
+  const [editRole, setEditRole] = useState("");
 
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const usersData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUsers(usersData);
+      setLoading(false);
+    };
+
+    fetchUsers();
+  }, []);
+
+/*
   useEffect(() => {
     const fetchUsers = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));
@@ -22,15 +39,37 @@ const AdminUsers = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, []);*/
 
   const handleEdit = (user) => {
     setSelectedUser(user);
     setEditName(user.name || "");
     setEditRoom(user.roomNumber || "");
+    setEditRole(user.role || "guest"); // Default to "guest" if no role is provided
     setShowModal(true);
   };
 
+  const handleUpdate = async () => {
+    if (selectedUser) {
+      const userRef = doc(db, "users", selectedUser.id);
+      await updateDoc(userRef, {
+        name: editName,
+        roomNumber: editRoom,
+        role: editRole // Update the role in Firestore
+      });
+      setUsers(users.map(u =>
+        u.id === selectedUser.id
+          ? { ...u, name: editName, roomNumber: editRoom, role: editRole }
+          : u
+      ));
+      setShowModal(false);
+      alert("User profile updated successfully.");
+    }
+  };
+  
+
+
+/*
   const handleUpdate = async () => {
     if (selectedUser) {
       const userRef = doc(db, "users", selectedUser.id);
@@ -42,7 +81,7 @@ const AdminUsers = () => {
       setShowModal(false);
       alert("User profile updated successfully.");
     }
-  };
+  };*/
 
   const handleDelete = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
@@ -56,7 +95,7 @@ const AdminUsers = () => {
 
   return (
     <>
-      <h2>User Management</h2>
+      <h2 class= "text-start">User Management</h2>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -110,6 +149,18 @@ const AdminUsers = () => {
                 onChange={(e) => setEditRoom(e.target.value)} 
               />
             </Form.Group>
+            <Form.Group className="mb-3">
+            <Form.Label>Role</Form.Label>
+              <Form.Select
+                value={editRole}
+                onChange={(e) => setEditRole(e.target.value)}
+              >
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+                <option value="guest">Guest</option>
+            </Form.Select>
+          </Form.Group>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>

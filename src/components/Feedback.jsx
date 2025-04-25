@@ -30,7 +30,7 @@ const Feedback = () => {
 
   return (
     <div className="mt-5">
-      <h3>Feedback</h3>
+      <h3 class= "text-start">Feedback</h3>
       <textarea
         className="form-control mb-3"
         rows="4"

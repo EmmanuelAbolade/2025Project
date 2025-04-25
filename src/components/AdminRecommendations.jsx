@@ -136,7 +136,7 @@ const AdminRecommendations = () => {
 
   return (
     <>
-      <h2>Recommendations Management</h2>
+      <h2 class= "text-start">Recommendations Management</h2>
       <Button variant="primary" onClick={() => handleOpenModal()}>
         Add Recommendation
       </Button>

@@ -56,7 +56,7 @@ const RequestBank = () => {
 
   return (
     <div>
-      <h2>Your Requests</h2>
+      <h2 class= "text-start">Your Requests</h2>
       {loading ? (
         <p>Loading requests...</p>
       ) : requests.length > 0 ? (

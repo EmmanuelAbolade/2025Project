@@ -3,8 +3,12 @@
 import React from "react";
 import ChatWindow from "./ChatWindow";
 
-const StaffMessages = () => {
-  return <ChatWindow currentUserId="staff" senderLabel="Staff" />;
+const StaffMessages = ({ currentUserId }) => {
+  
+  return (
+    <ChatWindow currentUserId={currentUserId} senderLabel="Staff" />
+  );
+  //return <ChatWindow currentUserId="staff" senderLabel="Staff" />;
 };
 
 export default StaffMessages;

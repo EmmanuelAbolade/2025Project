@@ -10,13 +10,17 @@ import AdminRecommendations from "../components/AdminRecommendations"; // New Co
 import AdminGuestRequests from "../components/AdminGuestRequests"; // Newly created
 import AdminProfile from "../components/AdminProfile"; // New: Admin Profile
 import DashboardGreeting from "../components/DashboardGreeting";
+import DeleteOldConversationsButton from "../components/DeleteOldConversationsButton";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth, db } from "../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs } from "firebase/firestore";
+
+
 
 const AdminDashboard = () => {
   const [adminName, setAdminName] = useState("Admin");
   const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchAdminName = async () => {
@@ -38,6 +42,8 @@ const AdminDashboard = () => {
     fetchAdminName();
   }, []);
 
+  
+
   if (loading) {
     return (
       <div className="text-center mt-4">
@@ -49,7 +55,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="container mt-5">
-      <h1>Admin Dashboard</h1>
+      <h1 class= "text-start">Admin Dashboard</h1>
       <DashboardGreeting
         title="Manage users, announcements, guest feedback, recommendations, guest requests, and staff assignments."
         name={adminName}
@@ -64,8 +70,15 @@ const AdminDashboard = () => {
         <Tab eventKey="announcements" title="Announcements" aria-label="Manage Announcements">
           <AdminAnnouncements />
         </Tab>
-        <Tab eventKey="messages" title="Messages" aria-label="Communicate with staff and guests">
-          <AdminMessages /> {/* New tab for messaging */}
+        
+        <Tab eventKey="messages" title="Messaging" aria-label="Communicate with staff and guests">
+          {/* Pass currentUserId and senderLabel */}
+          {auth.currentUser && (
+            <AdminMessages
+              currentUserId={auth.currentUser.uid} // Firebase Authentication UID
+              senderLabel={adminName} // Role label
+            />
+          )}
         </Tab>
         <Tab eventKey="feedback" title="Feedback" aria-label="View and manage guest feedback">
           <GuestFeedback /> {/* New tab for feedback management */}
@@ -81,6 +94,19 @@ const AdminDashboard = () => {
           <AdminDesignations />
         </Tab>
       </Tabs>
+
+            {/* Section for managing old conversations */}
+  <div style={{ marginBottom: "20px" }}>
+    <h3>Manage Old Conversations</h3>
+    {/* Button to delete conversations older than 30 days */}
+    <DeleteOldConversationsButton days={30} label="Delete Conversation Messages Older Than 30 Days" />
+    {/* Button to delete conversations older than 60 days */}
+    <DeleteOldConversationsButton days={60} label="Delete Conversation Messages Older Than 60 Days" />
+    {/* Button to delete conversations older than 90 days */}
+    <DeleteOldConversationsButton days={90} label="Delete Conversation Messages Older Than 90 Days" />
+  </div>
+  
+
     </div>
   );
 };

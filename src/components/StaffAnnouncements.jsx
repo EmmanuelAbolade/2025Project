@@ -41,7 +41,7 @@ const StaffAnnouncements = () => {
 
   return (
     <div className="mt-5">
-      <h3>Post Announcements</h3>
+      <h3 class= "text-start">Post Announcements</h3>
       <div className="mb-3">
         <input
           type="text"
@@ -61,7 +61,7 @@ const StaffAnnouncements = () => {
           Post Announcement
         </button>
       </div>
-      <h3>Existing Announcements</h3>
+      <h3 class= "text-start">Existing Announcements</h3>
       <div className="border rounded p-3 mb-3" style={{ maxHeight: "300px", overflowY: "scroll" }}>
         {announcements.length > 0 ? (
           announcements.map((ann) => (

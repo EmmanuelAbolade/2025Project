@@ -38,7 +38,7 @@ const AdminFeedback = () => {
   
   return (
     <>
-      <h2>Guest Feedback</h2>
+      <h2 class= "text-start">Guest Feedback</h2>
       <Table striped bordered hover>
         <thead>
           <tr>

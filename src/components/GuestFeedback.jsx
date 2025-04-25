@@ -30,7 +30,7 @@ const GuestFeedback = () => {
 
   return (
     <div>
-      <h2>Guest Feedback</h2>
+      <h2 class= "text-start">Guest Feedback</h2>
       <ul>
         {feedbacks.map(feedback => (
           <li key={feedback.id}>

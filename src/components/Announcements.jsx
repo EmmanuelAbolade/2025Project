@@ -25,7 +25,7 @@ const Announcements = () => {
 
   return (
     <div className="mt-5">
-      <h3>Announcements</h3>
+      <h3 class= "text-start">Announcements</h3>
       <input
         type="text"
         className="form-control mb-3"

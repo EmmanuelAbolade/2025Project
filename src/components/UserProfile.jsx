@@ -15,7 +15,7 @@ const UserProfile = () => {
     email: "",
     phoneNumber: "",
     roomNumber: "",
-    profilePicture: "",
+    profilePic: "",
   });
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -34,7 +34,7 @@ const UserProfile = () => {
               email: data.email || "",
               phoneNumber: data.phoneNumber || "",
               roomNumber: data.roomNumber || "",
-              profilePicture: data.profilePicture || "",
+              profilePic: data.profilePic || "",
             });
           }
         } catch (error) {
@@ -124,9 +124,9 @@ const UserProfile = () => {
             <Form.Group className="mb-3">
               <Form.Label>Profile Picture</Form.Label>
               <div className="mb-2">
-                {profile.profilePicture ? (
+                {profile.profilePic ? (
                   <Image
-                    src={profile.profilePicture}
+                    src={profile.profilePic}
                     roundedCircle
                     width="150"
                     height="150"
@@ -146,7 +146,7 @@ const UserProfile = () => {
               </div>
               <CloudinaryUpload
                 onUploadComplete={(url) =>
-                  setProfile({ ...profile, profilePicture: url })
+                  setProfile({ ...profile, profilePic: url })
                 }
               />
             </Form.Group>
@@ -167,9 +167,9 @@ const UserProfile = () => {
         ) : (
           <div>
             <div className="text-center mb-3">
-              {profile.profilePicture ? (
+              {profile.profilePic ? (
                 <Image
-                  src={profile.profilePicture}
+                  src={profile.profilePic}
                   roundedCircle
                   width="150"
                   height="150"

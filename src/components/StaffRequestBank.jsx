@@ -28,7 +28,7 @@ const StaffRequestBank = ({ staffId }) => {
 
   return (
     <div className="container my-4">
-      <h2>Your Assigned Requests</h2>
+      <h2 class= "text-start">Your Assigned Requests</h2>
       <Table striped bordered hover responsive>
         <thead>
           <tr>

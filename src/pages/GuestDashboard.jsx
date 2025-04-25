@@ -2,20 +2,23 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase/firebaseConfig";
 import { db } from "../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { Tab, Tabs } from "react-bootstrap";
 import UserProfile from "../components/UserProfile";
 import Announcements from "../components/Announcements";
 import Feedback from "../components/Feedback";
-import Messages from "../components/GuestMessages";
+import GuestMessages from "../components/GuestMessages";
 import RequestBank from "../components/RequestBank";
 import DashboardGreeting from "../components/DashboardGreeting";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const GuestDashboard = () => {
   const [guestName, setGuestName] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchGuestDetails = async () => {
@@ -32,6 +35,18 @@ const GuestDashboard = () => {
     fetchGuestDetails();
   }, []);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const snapshot = await getDocs(collection(db, "users"));
+      const fetchedUsers = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setUsers(fetchedUsers);
+    };
+    fetchUsers();
+  }, []);
+
   return (
     <div className="container mt-5">
       {loading ? (
@@ -40,8 +55,8 @@ const GuestDashboard = () => {
         </div>
       ) : (
         <>
-         <h1>GUEST DASHBOARD</h1>
-        {/* Replace static headers with DashboardGreeting */}
+         <h1 class= "text-start">GUEST DASHBOARD</h1>
+        {/*static headers with DashboardGreeting */}
         <DashboardGreeting
             title=" Here's your personalized dashboard. Manage your profile, view your requests, send messages and explore announcements."
             name={guestName}
@@ -58,8 +73,16 @@ const GuestDashboard = () => {
             <Tab eventKey="feedback" title="Feedback" aria-label="Send feedback">
               <Feedback />
             </Tab>
-            <Tab eventKey="messages" title="Messages" aria-label="Read and send messages">
-              <Messages />
+            
+            <Tab eventKey="messages" title="Messaging" aria-label="Read and send messages">
+              {/* Pass currentUserId and senderLabel */}
+              {auth.currentUser && (
+                <GuestMessages
+                  currentUserId={auth.currentUser.uid} // Firebase Authentication UID
+                  senderLabel={guestName}
+                  //senderLabel="Guest" // Role label
+                />
+              )}
             </Tab>
             <Tab eventKey="requestBank" title="Request Bank" aria-label="Manage your requests">
               <RequestBank />
@@ -77,40 +100,3 @@ export default GuestDashboard;
 
 
 
-
-/*import React from "react";
-import { Tab, Tabs } from "react-bootstrap";
-import UserProfile from "../components/UserProfile";
-import Announcements from "../components/Announcements";
-import Feedback from "../components/Feedback";
-import Messages from "../components/Messages";
-import RequestBank from "../components/RequestBank"; // New Component
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-const GuestDashboard = () => {
-  return (
-    <div className="container mt-5">
-      <h1>Guest Dashboard</h1>
-      <Tabs defaultActiveKey="profile" className="mb-3" onSelect={(key) => console.log(`Active tab: ${key}`)}>
-        <Tab eventKey="profile" title="Profile" aria-label="View and edit your profile">
-          <UserProfile />
-        </Tab>
-        <Tab eventKey="announcements" title="Announcements" aria-label="View announcements">
-          <Announcements />
-        </Tab>
-        <Tab eventKey="feedback" title="Feedback" aria-label="Send a feed back">
-          <Feedback />
-        </Tab>
-        <Tab eventKey="messages" title="Messages" aria-label="Read and send messages">
-          <Messages />
-        </Tab>
-        <Tab eventKey="requestBank" title="Request Bank" aria-label="Manage your requests">
-          <RequestBank />
-        </Tab>
-      </Tabs>
-    </div>
-  );
-};
-
-export default GuestDashboard;
-*/
