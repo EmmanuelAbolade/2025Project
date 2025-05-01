@@ -1,7 +1,7 @@
-//src\components\common\ProtectedRoute.jsx
+//src\components\ProtectedRoute.jsx
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 
 
 const ProtectedRoute = ({ children }) => {

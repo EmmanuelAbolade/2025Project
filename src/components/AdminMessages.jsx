@@ -2,9 +2,11 @@
 import React from "react";
 import ChatWindow from "./ChatWindow";
 
-const AdminMessages = ( {currentUserId }) => {
+const AdminMessages = ( {currentUserId, senderLabel }) => {
   return (
-    <ChatWindow currentUserId={currentUserId} senderLabel="Admin" />
+    <ChatWindow currentUserId={currentUserId} 
+    senderLabel={senderLabel} />
+    //<ChatWindow currentUserId={currentUserId} senderLabel={adminName} />
   );
   //return <ChatWindow currentUserId="admin" senderLabel="Admin" />;
 };

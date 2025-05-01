@@ -1,6 +1,6 @@
 // File: src/components/ChatWindow.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Container, ListGroup, Form, Button, Spinner } from "react-bootstrap";
+import { Container, ListGroup, Card, Form, Button, Spinner } from "react-bootstrap";
 import { 
   collection, 
   query, 
@@ -340,23 +340,25 @@ const handleSelectConversation = async (conv) => {
   // UI Rendering
   return (
     <Container fluid className="mt-4">
-      <h2 class= "text-start">Messaging</h2>
+      <h2 className="text-start fw-bold text-primary">💬 Messaging</h2>
+  
+      {/* Mode Toggles */}
       <div className="d-flex justify-content-between mb-5 mt-5">
-        
-        <Button variant="warning" onClick={handleToggleAnonymous}>
-          {anonymousMode ? "Disable Anonymous Mode" : "Enable Anonymous Mode"}
+        <Button variant="outline-warning fw-bold" onClick={handleToggleAnonymous}>
+          {anonymousMode ? "🔓 Disable Anonymous Mode" : "🔒 Enable Anonymous Mode"}
         </Button>
-        <Button variant="warning" onClick={handleToggleInvisible}>
-          {invisibleMode ? "Disable Invisible Mode" : "Enable Invisible Mode"}
+        <Button variant="outline-warning fw-bold" onClick={handleToggleInvisible}>
+          {invisibleMode ? "👁 Disable Invisible Mode" : "👤 Enable Invisible Mode"}
         </Button>
       </div>
-      {/* Section for starting a new conversation */}
-      <div style={{ marginBottom: "20px" }}>
-        <h3>Start a Conversation</h3>
+  
+      {/* Start a Conversation */}
+      <Card className="shadow-lg border border-4 border-dark rounded p-4">
+        <h3 className="fw-bold">🗨 Start a Conversation</h3>
         <select
           value={selectedUser}
           onChange={(e) => setSelectedUser(e.target.value)}
-          style={{ marginRight: "10px" }}
+          className="form-select mb-3"
         >
           <option value="">Select a user</option>
           {users.map((user) => (
@@ -365,143 +367,99 @@ const handleSelectConversation = async (conv) => {
             </option>
           ))}
         </select>
-        <Button variant="primary" onClick={startConversation}>
-          Start
+        <Button variant="primary fw-bold" onClick={startConversation} className="w-100">
+          Start 🚀
         </Button>
-      </div>
-
-          {/* Unread Conversations Section */}
-      <h3>Unread Conversations</h3>
-      <ListGroup>
-        {unreadConversations.map((conv) => (
-          <ListGroup.Item
-            key={conv.id}
-            action
-            onClick={() => handleSelectConversation(conv)}
-          >
-            <strong>{conv.name}</strong>
-            <span className="badge">Unread</span>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-
-
-      {/* Section for displaying conversations */}
-      <h3>Conversations</h3>
-      <ListGroup>
-  {conversations.map((conv) => {
-    // Resolve recipient details dynamically using getSenderAndRecipient
-    const { recipientId } = getSenderAndRecipient(conv.members, currentUserId);
-    const recipientDetails = users.find((user) => user.id === recipientId);
-
-    return (
-      <ListGroup.Item
-        key={conv.id}
-        action
-        active={selectedConv && conv.id === selectedConv.id}
-        onClick={() => handleSelectConversation(conv)} // Trigger selection and mark as read
-      >
-        <div>
-          {/* Display recipient's name dynamically, fallback to conversation name or Unknown User */}
-          <strong>{conv.name || recipientDetails?.name || "Unknown User"}</strong>
-          <div style={{ fontSize: "0.8rem", color: "#666" }}>
-            {/* Display unread badge for conversations */}
-            {conv.unread?.[currentUserId] && <span className="badge">Unread</span>}
-          </div>
-        </div>
-      </ListGroup.Item>
-    );
-  })}
-</ListGroup>
-
-
-      {/* Section for displaying messages */}
-      {selectedConv ? (
-        <>
-          <h4>Chat with {selectedConv.name}</h4>
-          {/* Close Chat Button */}
-          <Button
-            variant="secondary"
-            onClick={handleCloseChat}
-            style={{ marginBottom: "10px" }}
-          >
-            Close Chat
-        </Button>
-          <div
-            style={{
-              height: "400px",
-              overflowY: "auto",
-              border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "5px",
-              backgroundColor: "#fbfbfb",
-            }}
-          >
-            {loadingMessages ? (
-              <Spinner animation="border" variant="primary" />
-            ) : (
-              messages.map((msg) => (
-                <div key={msg.id} style={{ marginBottom: "15px" }}>
-                  <div style={{ display: "flex", alignItems: "center", marginBottom: "5px" }}>
-                    <img
-                      src={msg.senderProfilePic || "default-profile.png"}
-                      alt={`${msg.senderName}'s profile`}
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        marginRight: "10px",
-                      }}
-                    />
-                    <div>
-                    <div style={{ fontWeight: "bold" }}>{msg.sender || "Unknown User"}</div>
-                    <div style={{ fontSize: "0.8rem", color: "#aaa" }}>{msg.sender || "Unknown Role"}</div>
+      </Card>
+  
+      {/* Unread Conversations */}
+      <Card className="mt-4 shadow-lg border border-3 border-dark rounded p-4">
+        <h3 className="fw-bold text-danger">🔔 Unread Conversations</h3>
+        <ListGroup>
+          {unreadConversations.map((conv) => (
+            <ListGroup.Item key={conv.id} action onClick={() => handleSelectConversation(conv)}>
+              <strong>{conv.name}</strong> <span className="badge bg-warning text-dark">Unread</span>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Card>
+  
+      {/* Conversations List */}
+      <Card className="mt-4 shadow-lg border border-3 border-dark rounded p-4">
+        <h3 className="fw-bold text-success">📜 Conversations</h3>
+        <ListGroup>
+          {conversations.map((conv) => {
+            const { recipientId } = getSenderAndRecipient(conv.members, currentUserId);
+            const recipientDetails = users.find((user) => user.id === recipientId);
+  
+            return (
+              <ListGroup.Item
+                key={conv.id}
+                action
+                active={selectedConv && conv.id === selectedConv.id}
+                onClick={() => handleSelectConversation(conv)}
+              >
+                <strong>{conv.name || recipientDetails?.name || "Unknown User"}</strong>
+                {conv.unread?.[currentUserId] && <span className="badge bg-danger ms-2">Unread</span>}
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
+      </Card>
+  
+      {/* Messages Section */}
+      <Card className="mt-4 shadow-lg border border-3 border-dark rounded p-4">
+        {selectedConv ? (
+          <>
+            <h4 className="fw-bold text-primary">💬 Chat with {selectedConv.name}</h4>
+            <Button variant="secondary fw-bold mb-2" onClick={handleCloseChat}>❌ Close Chat</Button>
+  
+            {/* Chat Window */}
+            <div className="chat-window p-3 bg-light rounded" style={{ height: "400px", overflowY: "auto" }}>
+              {loadingMessages ? (
+                <Spinner animation="border" variant="primary" />
+              ) : (
+                messages.map((msg) => (
+                  <div key={msg.id} className="chat-message mb-3 p-2 rounded bg-white shadow-sm">
+                    <div className="d-flex align-items-center mb-2">
+                      <img
+                        src={msg.senderProfilePic || "default-profile.png"}
+                        alt={`${msg.senderName}'s profile`}
+                        className="rounded-circle me-2"
+                        style={{ width: "40px", height: "40px" }}
+                      />
+                      <div>
+                        <div className="fw-bold">{msg.sender || "Unknown User"}</div>
+                        <div className="small text-muted">{msg.timestamp?.toDate ? new Date(msg.timestamp.toDate()).toLocaleString() : ""}</div>
+                      </div>
+                    </div>
+                    <div>{msg.content}</div>
+                    {msg.senderId === currentUserId && (
+                      <Button variant="danger btn-sm mt-2" onClick={() => handleDeleteMessage(msg.id)}>🗑 Delete</Button>
+                    )}
                   </div>
-                </div>
-                  <div>{msg.content}</div>
-                  <div style={{ fontSize: "0.8rem", color: "#aaa" }}>
-                    {msg.timestamp && msg.timestamp.toDate
-                      ? new Date(msg.timestamp.toDate()).toLocaleString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })
-                      : ""}
-                  </div>
-                  {msg.senderId === currentUserId && (
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDeleteMessage(msg.id)}
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </div>
-              ))
-            )}
-            <div ref={messagesEndRef} /> {/* Scroll to the bottom */}
+                ))
+              )}
+            </div>
+  
+            {/* Send Message Input */}
+            <Form onSubmit={handleSendMessage} className="mt-3 d-flex">
+              <Form.Control
+                type="text"
+                placeholder="✍️ Type your message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <Button variant="primary fw-bold ms-2" type="submit">📩 Send</Button>
+            </Form>
+          </>
+        ) : (
+          <div className="text-center text-muted mt-5">
+            <h4>👆 Select a conversation to start messaging.</h4>
           </div>
-
-          {/* Input form to send messages */}
-          <Form onSubmit={handleSendMessage} className="mt-3 d-flex">
-            <Form.Control
-              type="text"
-              placeholder="Type your message..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <Button variant="primary" className="ms-2" type="submit">
-              Send
-            </Button>
-          </Form>
-        </>
-      ) : (
-        <div style={{ textAlign: "center", color: "#888", marginTop: "50px" }}>
-          <h4>Select a conversation to start messaging.</h4>
-          </div>
-      )}
+        )}
+      </Card>
     </Container>
   );
 };
-
-export default ChatWindow;
+  export default ChatWindow;

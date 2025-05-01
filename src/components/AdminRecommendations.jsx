@@ -1,7 +1,7 @@
 
 // src/components/AdminRecommendations.jsx
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Spinner } from "react-bootstrap";
+import { Table, Button, Modal, Card, Container, Form, Spinner } from "react-bootstrap";
 import { db, storage } from "../firebase/firebaseConfig";
 import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -120,8 +120,8 @@ const AdminRecommendations = () => {
     // Create a unique file path using the current timestamp and file name.
     const storageRef = ref(storage, `recommendationImages/${Date.now()}-${file.name}`);
     try {
+
       // Create a unique file path using the current timestamp and file name.
-    //const storageRef = ref(storage, `recommendationImages/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
       setCurrentRec(prev => ({ ...prev, image: downloadURL }));
@@ -135,62 +135,74 @@ const AdminRecommendations = () => {
   if (loading) return <p>Loading recommendations...</p>;
 
   return (
-    <>
-      <h2 class= "text-start">Recommendations Management</h2>
-      <Button variant="primary" onClick={() => handleOpenModal()}>
-        Add Recommendation
-      </Button>
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>URL</th>
-            <th>Image</th>
-            <th>Location</th>
-            <th>Map</th>
-            <th>Services</th>
-            <th>Contacts</th>
-            <th>Hours</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recommendations.map(rec => (
-            <tr key={rec.id}>
-              <td>{rec.name}</td>
-              <td>{rec.url}</td>
-              <td>{rec.image ? (
-                  <img src={rec.image} alt={rec.name} style={{ width: "100px" }} />
-                ) : (
-                  "No image"
-                )}</td>
-              <td>{rec.location}</td>
-              <td>{rec.map}</td>
-              <td>{rec.services}</td>
-              <td>{rec.contacts}</td>
-              <td>{rec.hours}</td>
-              <td>
-                <Button variant="info" onClick={() => handleOpenModal(rec)} className="me-2">
-                  Edit
-                </Button>
-                <Button variant="danger" onClick={() => handleDeleteRecommendation(rec.id)}>
-                  Delete
-                </Button>
-              </td>
+    <Container fluid className="mt-4">
+      <h2 className="text-start fw-bold text-primary">📌 Recommendations Management</h2>
+  
+      {/* Add Recommendation Button */}
+      <Card className="shadow-lg border border-3 border-dark rounded p-4 mb-3">
+        <Button variant="primary fw-bold w-100" onClick={() => handleOpenModal()}>
+          ➕ Add Recommendation
+        </Button>
+      </Card>
+  
+      {/* Recommendation Table */}
+      <Card className="shadow-lg border border-3 border-dark rounded p-4 bg-light">
+        <Table striped bordered hover responsive className="text-center">
+          <thead className="bg-primary text-white">
+            <tr>
+              <th>Name</th>
+              <th>URL</th>
+              <th>Image</th>
+              <th>Location</th>
+              <th>Map</th>
+              <th>Services</th>
+              <th>Contacts</th>
+              <th>Hours</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-
+          </thead>
+          <tbody>
+            {recommendations.map((rec) => (
+              <tr key={rec.id}>
+                <td>{rec.name}</td>
+                <td><a href={rec.url} target="_blank" rel="noopener noreferrer">{rec.url}</a></td>
+                <td>
+                  {rec.image ? (
+                    <img src={rec.image} alt={rec.name} className="rounded shadow-sm" style={{ width: "100px" }} />
+                  ) : (
+                    <span className="text-muted">No image</span>
+                  )}
+                </td>
+                <td>{rec.location}</td>
+                <td>{rec.map}</td>
+                <td>{rec.services}</td>
+                <td>{rec.contacts}</td>
+                <td>{rec.hours}</td>
+                <td>
+                  <Button variant="info fw-bold shadow-sm me-2" onClick={() => handleOpenModal(rec)}>
+                    ✏ Edit
+                  </Button>
+                  <Button variant="danger fw-bold shadow-sm" onClick={() => handleDeleteRecommendation(rec.id)}>
+                    🗑 Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
+  
       {/* Modal for adding/updating recommendation */}
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>{editMode ? "Edit Recommendation" : "Add Recommendation"}</Modal.Title>
+          <Modal.Title className="fw-bold text-primary">
+            {editMode ? "✏ Edit Recommendation" : "➕ Add Recommendation"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
+              <Form.Label className="fw-bold">📌 Name</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.name}
@@ -198,29 +210,27 @@ const AdminRecommendations = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>URL</Form.Label>
+              <Form.Label className="fw-bold">🔗 URL</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.url}
                 onChange={(e) => setCurrentRec({ ...currentRec, url: e.target.value })}
               />
             </Form.Group>
-      {/* Cloudinary Upload for Image */}
-      <Form.Group className="mb-3">
-        <Form.Label></Form.Label>
-        <CloudinaryUpload
-          onUploadComplete={(url) =>
-            setCurrentRec((prev) => ({ ...prev, image: url }))
-          }
-        />
-        {currentRec.image && (
-          <div className="mt-2">
-            <img src={currentRec.image} alt="Preview" style={{ width: "100px" }} />
-          </div>
-        )}
-      </Form.Group>
+            {/* Cloudinary Upload for Image */}
             <Form.Group className="mb-3">
-              <Form.Label>Location</Form.Label>
+              <Form.Label className="fw-bold">📸 Upload Image</Form.Label>
+              <CloudinaryUpload
+                onUploadComplete={(url) => setCurrentRec((prev) => ({ ...prev, image: url }))}
+              />
+              {currentRec.image && (
+                <div className="mt-2">
+                  <img src={currentRec.image} alt="Preview" className="rounded shadow-sm" style={{ width: "100px" }} />
+                </div>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="fw-bold">📍 Location</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.location}
@@ -228,7 +238,7 @@ const AdminRecommendations = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Map</Form.Label>
+              <Form.Label className="fw-bold">🗺 Map</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.map}
@@ -236,7 +246,7 @@ const AdminRecommendations = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Services/Products</Form.Label>
+              <Form.Label className="fw-bold">🛠 Services/Products</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.services}
@@ -244,7 +254,7 @@ const AdminRecommendations = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Contacts</Form.Label>
+              <Form.Label className="fw-bold">📞 Contacts</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.contacts}
@@ -252,7 +262,7 @@ const AdminRecommendations = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Hours</Form.Label>
+              <Form.Label className="fw-bold">🕰 Hours</Form.Label>
               <Form.Control
                 type="text"
                 value={currentRec.hours}
@@ -262,88 +272,17 @@ const AdminRecommendations = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cancel
+          <Button variant="secondary fw-bold" onClick={handleCloseModal}>
+            ❌ Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmitRecommendation}>
-            {editMode ? "Update" : "Add"}
+          <Button variant="primary fw-bold" onClick={handleSubmitRecommendation}>
+            {editMode ? "✅ Update" : "➕ Add"}
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </Container>
   );
+  
 };
 
 export default AdminRecommendations;
-
-
-
-
-
-
-/*
-//commente 16/4/2025
-import React, { useState, useEffect } from "react";
-import { db } from "../firebase/firebaseConfig";
-import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
-
-const AdminRecommendations = () => {
-  const [recommendations, setRecommendations] = useState([]);
-  const [newRecommendation, setNewRecommendation] = useState("");
-
-  useEffect(() => {
-    const fetchRecommendations = async () => {
-      const recSnapshot = await getDocs(collection(db, "recommendations"));
-      const fetchedRecommendations = recSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setRecommendations(fetchedRecommendations);
-    };
-
-    fetchRecommendations();
-  }, []);
-
-  const handleAddRecommendation = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "recommendations"), { content: newRecommendation });
-      setRecommendations([...recommendations, { id: docRef.id, content: newRecommendation }]);
-      setNewRecommendation("");
-    } catch (error) {
-      console.error("Error adding recommendation:", error);
-    }
-  };
-
-  const handleDeleteRecommendation = async (id) => {
-    try {
-      const recDoc = doc(db, "recommendations", id);
-      await deleteDoc(recDoc);
-      setRecommendations(recommendations.filter(rec => rec.id !== id));
-    } catch (error) {
-      console.error("Error deleting recommendation:", error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Recommendations</h2>
-      <textarea
-        value={newRecommendation}
-        onChange={(e) => setNewRecommendation(e.target.value)}
-        placeholder="Add new recommendation..."
-        className="form-control mb-3"
-      ></textarea>
-      <button className="btn btn-primary" onClick={handleAddRecommendation}>
-        Add
-      </button>
-      <ul>
-        {recommendations.map(rec => (
-          <li key={rec.id}>
-            <p>{rec.content}</p>
-            <button onClick={() => handleDeleteRecommendation(rec.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default AdminRecommendations;
-*/

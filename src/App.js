@@ -48,7 +48,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // Import the onMessageListener to listen for foreground FCM messages
 import { onMessageListener } from "./initializeFCM";
-
+import "./helpers/populateStaffProfiles";
 function AppContent() {
   const location = useLocation();
   const hideNavbarAndFooter = ["/signup", "/login"];

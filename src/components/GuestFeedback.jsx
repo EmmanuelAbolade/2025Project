@@ -27,21 +27,37 @@ const GuestFeedback = () => {
     alert("Feedback removed!");
     setFeedbacks(feedbacks.filter(fb => fb.id !== id));
   };
-
   return (
-    <div>
-      <h2 class= "text-start">Guest Feedback</h2>
-      <ul>
-        {feedbacks.map(feedback => (
-          <li key={feedback.id}>
-            <p>{feedback.content}</p>
-            <button onClick={() => handlePublish(feedback.id)}>Publish</button>
-            <button onClick={() => handleRemove(feedback.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container fluid className="mt-4">
+      <Card className="shadow-lg border border-3 border-dark rounded p-4 bg-light">
+        <h2 className="text-start fw-bold text-primary">📝 Guest Feedback</h2>
+  
+        {/* Feedback List */}
+        <Card className="shadow-lg border border-3 border-secondary rounded p-4 bg-white mt-4">
+          <ListGroup variant="flush">
+            {feedbacks.length > 0 ? (
+              feedbacks.map((feedback) => (
+                <ListGroup.Item key={feedback.id} className="shadow-sm p-3 border border-2 border-secondary rounded">
+                  <p className="text-dark fw-bold">{feedback.content}</p>
+                  <div className="d-flex gap-2 mt-2">
+                    <Button variant="success fw-bold shadow-sm" onClick={() => handlePublish(feedback.id)}>
+                      ✅ Publish
+                    </Button>
+                    <Button variant="danger fw-bold shadow-sm" onClick={() => handleRemove(feedback.id)}>
+                      🗑 Remove
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+              ))
+            ) : (
+              <Alert variant="warning fw-bold text-center mt-3">⚠ No feedback available.</Alert>
+            )}
+          </ListGroup>
+        </Card>
+      </Card>
+    </Container>
   );
+  
 };
 
 export default GuestFeedback;

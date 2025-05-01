@@ -27,35 +27,48 @@ const Feedback = () => {
       alert("Something went wrong. Please try again later.");
     }
   };
-
   return (
-    <div className="mt-5">
-      <h3 class= "text-start">Feedback</h3>
-      <textarea
-        className="form-control mb-3"
-        rows="4"
-        value={feedback}
-        onChange={(e) => setFeedback(e.target.value)}
-        placeholder="Leave your feedback here..."
-        aria-label="Feedback message input"
-      ></textarea>
-      <div className="mb-3">
-        <strong>Rate Us :</strong>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            className={`btn btn-sm ${rating >= star ? "btn-warning" : "btn-outline-warning"}`}
-            onClick={() => setRating(star)}
-          >
-            ★
-          </button>
-        ))}
-      </div>
-      <button className="btn btn-primary d-flex justify-content-between mb-5 mt-5" onClick={handleFeedbackSubmit}>
-        Submit Feedback
-      </button>
-    </div>
+    <Container fluid className="mt-5">
+      <Card className="shadow-lg border border-3 border-dark rounded p-4 bg-light">
+        <h3 className="fw-bold text-primary">📝 Feedback</h3>
+  
+        {/* Feedback Input Field */}
+        <Form.Group className="mb-3">
+          <Form.Control
+            as="textarea"
+            rows="4"
+            placeholder="💬 Leave your feedback here..."
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            className="border border-2 border-primary shadow-sm"
+            aria-label="Feedback message input"
+          />
+        </Form.Group>
+  
+        {/* Rating System */}
+        <Card className="shadow-lg border border-3 border-secondary rounded p-3 bg-white">
+          <strong className="fw-bold text-dark">⭐ Rate Us :</strong>
+          <div className="d-flex mt-2">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Button
+                key={star}
+                className={`btn-sm fw-bold mx-1 ${rating >= star ? "btn-warning shadow-sm" : "btn-outline-warning border-2"}`}
+                onClick={() => setRating(star)}
+              >
+                ★
+              </Button>
+            ))}
+          </div>
+        </Card>
+  
+        {/* Submit Button */}
+        <Button variant="primary fw-bold shadow-sm w-100 mt-4" onClick={handleFeedbackSubmit}>
+          📩 Submit Feedback
+        </Button>
+      </Card>
+    </Container>
   );
+  
 };
 
 export default Feedback;

@@ -3,18 +3,27 @@
 import React from "react";
 import ChatWindow from "./ChatWindow";
 
-const StaffMessages = ({ currentUserId }) => {
+const StaffMessages = ({ currentUserId, senderLabel }) => {
   
   return (
-    <ChatWindow currentUserId={currentUserId} senderLabel="Staff" />
+    
+    <ChatWindow currentUserId={currentUserId} 
+    senderLabel={senderLabel} />
+    //<ChatWindow currentUserId={currentUserId} senderLabel={staffName} />
   );
   //return <ChatWindow currentUserId="staff" senderLabel="Staff" />;
 };
 
 export default StaffMessages;
 
-
-
+/*
+const GuestMessages = ({ currentUserId, senderLabel }) => {
+  return (
+    <ChatWindow currentUserId={currentUserId} 
+    senderLabel={senderLabel} />
+    //senderLabel="Guest" />
+  );
+};
 
 /* //commented 18/4/2025 at 3.30pm
 import React, { useState, useEffect } from "react";

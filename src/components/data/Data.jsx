@@ -253,7 +253,7 @@ export const testimonial = [
   {
     description: "Very nice and user-friendly app",
     name: "Singer Crown",
-    profession: "Businessman",
+    profession: "Businesswoman",
     icon: (
       <i className="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),
@@ -271,7 +271,7 @@ export const testimonial = [
   {
     description: "Very reliable. I highly recommend.",
     name: "Daisy Dusk",
-    profession: "Profession",
+    profession: "Professor",
     icon: (
       <i className="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
     ),

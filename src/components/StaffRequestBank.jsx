@@ -1,58 +1,115 @@
-// src/components/StaffRequestBank.jsx
 import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Container, Card, Alert, Badge } from "react-bootstrap";
 import { db } from "../firebase/firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
-const StaffRequestBank = ({ staffId }) => {
+const StaffRequestBank = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Real-time listener for housekeeping requests
   useEffect(() => {
-    const fetchStaffRequests = async () => {
-      // Query for guestRequests where the logged‐in staff’s ID is included in assignedStaff
-      const q = query(
-        collection(db, "guestRequests"),
-        where("assignedStaff", "array-contains", staffId)
-      );
-      const querySnapshot = await getDocs(q);
-      const fetchedRequests = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const unsubscribe = onSnapshot(collection(db, "housekeepingRequests"), (snapshot) => {
+      const fetchedRequests = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setRequests(fetchedRequests);
       setLoading(false);
-    };
+    });
 
-    fetchStaffRequests();
-  }, [staffId]);
+    return () => unsubscribe(); // Cleanup on unmount
+  }, []);
 
-  if (loading) return <p>Loading assigned requests...</p>;
+  // Handle assigning a request
+  const handleAssign = async (id) => {
+    try {
+      const requestDoc = doc(db, "housekeepingRequests", id);
+      await updateDoc(requestDoc, { status: "Assigned" });
+      alert("Request has been assigned.");
+    } catch (error) {
+      console.error("Error assigning request:", error);
+      alert("Failed to assign the request. Please try again.");
+    }
+  };
+
+  // Handle updating a request
+  const handleUpdate = async (id) => {
+    const newDetails = prompt("Enter your updated request details:");
+    if (newDetails) {
+      try {
+        const requestDoc = doc(db, "housekeepingRequests", id);
+        await updateDoc(requestDoc, { formattedDetails: newDetails, status: "Updated" });
+        alert("Request updated successfully!");
+      } catch (error) {
+        console.error("Error updating request:", error);
+        alert("Failed to update the request. Please try again.");
+      }
+    }
+  };
+
+  // Handle canceling a request
+  const handleCancel = async (id) => {
+    if (window.confirm("Are you sure you want to cancel this request?")) {
+      try {
+        const requestDoc = doc(db, "housekeepingRequests", id);
+        await deleteDoc(requestDoc);
+        alert("Request canceled successfully!");
+      } catch (error) {
+        console.error("Error canceling request:", error);
+        alert("Failed to cancel the request. Please try again.");
+      }
+    }
+  };
 
   return (
-    <div className="container my-4">
-      <h2 class= "text-start">Your Assigned Requests</h2>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Guest Name</th>
-            <th>Room Number</th>
-            <th>Service Type</th>
-            <th>Details</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map(req => (
-            <tr key={req.id}>
-              <td>{req.guestName}</td>
-              <td>{req.roomNumber || "N/A"}</td>
-              <td>{req.serviceType}</td>
-              <td>{req.details}</td>
-              <td>{req.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+    <Container fluid className="mt-5">
+      <Card className="shadow-lg border border-0 border-dark rounded p-4 bg-light">
+        <h2 className="fw-bold text-start text-primary">🧹 Guest Housekeeping Requests</h2>
+  
+        {/* Loading Indicator */}
+        {loading ? (
+          <Alert variant="warning text-center fw-bold mt-3">⏳ Loading requests...</Alert>
+        ) : requests.length > 0 ? (
+          <Card className="shadow-lg border border-3 border-secondary rounded mt-4 p-4">
+            <Table striped bordered hover responsive className="text-center">
+              <thead className="bg-primary text-white">
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                  <th>Assigned Staff</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requests.map((request) => (
+                  <tr key={request.id}>
+                    <td>{new Date(request.timestamp.toDate()).toLocaleString()}</td>
+                    <td className="fw-bold text-muted">
+                      {typeof request.formattedDetails === "object" ? (
+                        Object.entries(request.formattedDetails).map(([key, value]) => (
+                          <div key={key} className="border-bottom py-1">
+                            {key.replace(/([A-Z])/g, " $1")}: {value.toString()}
+                          </div>
+                        ))
+                      ) : (
+                        request.formattedDetails || "No details available"
+                      )}
+                    </td>
+                    <td>
+                      <Badge bg={request.status === "Pending" ? "danger" : "success"} className="shadow-sm p-2 fw-bold">
+                        {request.status || "Pending"}
+                      </Badge>
+                    </td>
+                    <td>{request.assignedStaff || "Not Assigned"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card>
+        ) : (
+          <Alert variant="info text-center fw-bold mt-3">✅ No housekeeping requests found. Looks like a clean day!</Alert>
+        )}
+      </Card>
+    </Container>
   );
-};
+}; 
 
 export default StaffRequestBank;
