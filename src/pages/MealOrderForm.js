@@ -74,11 +74,11 @@ const MealOrderForm = () => {
       return;
     }
 
-    //  Ensure payment is completed before checkout
+   /* //  Ensure payment is completed before checkout
     if (!paymentCompleted) {
       alert("Please complete payment before submitting your order.");
       return;
-    }
+    }*/
 
     //  Ask guests if they wish to continue before placing the order
     const confirmCheckout = window.confirm("Are you sure you want to submit this order?");

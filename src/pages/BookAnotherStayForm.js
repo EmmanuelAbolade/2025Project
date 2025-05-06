@@ -1,3 +1,4 @@
+//src\pages\BookAnotherStayForm.js
 import React, { useState } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";

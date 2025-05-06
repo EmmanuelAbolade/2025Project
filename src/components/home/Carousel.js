@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { carouselData } from "../data/Data";
 import { Card, Button, Container} from "react-bootstrap";
+import { Link } from 'react-router-dom';
+
 export default function Carousel() {
   const sliderRef = useRef(null);
 
@@ -43,10 +45,10 @@ export default function Carousel() {
                       <h6 className="section-title text-uppercase mb-3 animated slideInDown">{val.subtitle}</h6>
                       <h1 className="display-3 fw-bold mb-4 animated slideInDown">{val.title}</h1>
                       <div className="d-flex gap-3">
-                        <Button className="btn btn-primary py-md-3 px-md-5 fw-bold animated slideInLeft">
+                        <Button as={Link} to="/contact" className="btn btn-primary py-md-3 px-md-5 fw-bold animated slideInLeft">
                           {val.btn1}
                         </Button>
-                        <Button className="btn btn-light py-md-3 px-md-5 fw-bold animated slideInRight">
+                        <Button as={Link} to="/DownloadApp" className="btn btn-success py-md-3 px-md-5 fw-bold animated slideInRight">
                           {val.btn2}
                         </Button>
                       </div>
